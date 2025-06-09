@@ -66,3 +66,5 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 ## 📞 Contacto
 
 Benjamín Correa - [bgcorrea@uc.cl](mailto:bgcorrea@uc.cl)
+
+LinkedIn: [Tu perfil de LinkedIn]

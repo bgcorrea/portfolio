@@ -5,6 +5,10 @@
   "framework": "create-react-app",
   "routes": [
     {
+      "src": "/CV.pdf",
+      "dest": "/CV.pdf"
+    },
+    {
       "src": "/img/(.*)",
       "dest": "/img/$1"
     },

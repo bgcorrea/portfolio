@@ -49,7 +49,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
         <div
           className={`${
             isMenuOpen ? "flex" : "hidden"
-          } md:flex flex-col md:flex-row absolute md:relative top-16 md:top-0 left-0 right-0 md:left-auto md:right-auto bg-amber-50 dark:bg-gray-800 md:bg-transparent dark:md:bg-transparent p-4 md:p-0 space-y-4 md:space-y-0 md:space-x-4 shadow-lg md:shadow-none`}
+          } md:flex flex-col md:flex-row fixed md:relative top-16 md:top-0 left-0 right-0 md:left-auto md:right-auto bg-amber-50 dark:bg-gray-800 md:bg-transparent dark:md:bg-transparent p-4 md:p-0 space-y-4 md:space-y-0 md:space-x-4 shadow-lg md:shadow-none z-50`}
         >
           <NavLink
             to="/"

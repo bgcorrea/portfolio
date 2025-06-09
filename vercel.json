@@ -5,6 +5,10 @@
   "framework": "create-react-app",
   "routes": [
     {
+      "src": "/img/(.*)",
+      "dest": "/img/$1"
+    },
+    {
       "src": "/static/(.*)",
       "dest": "/static/$1"
     },

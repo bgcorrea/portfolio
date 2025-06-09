@@ -41,7 +41,7 @@ const CV = () => {
 
         <div className="flex justify-center overflow-auto">
           <Document
-            file="/assets/CV.pdf"
+            file="/CV.pdf"
             onLoadSuccess={onDocumentLoadSuccess}
             loading={
               <div className="flex justify-center items-center h-[800px]">

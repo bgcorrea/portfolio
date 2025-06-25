@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 
 async function testEmail() {
   try {
-    console.log("Probando envío de correo...");
+    console.log("Probando envío de correo con GoDaddy...");
 
     const response = await fetch("http://localhost:5000/api/contact", {
       method: "POST",
@@ -13,9 +13,9 @@ async function testEmail() {
       body: JSON.stringify({
         name: "Usuario de Prueba",
         email: "test@ejemplo.com",
-        subject: "Mensaje de prueba",
+        subject: "Mensaje de prueba - GoDaddy",
         message:
-          "Este es un mensaje de prueba para verificar que el sistema de correos funciona correctamente.",
+          "Este es un mensaje de prueba para verificar que el sistema de correos funciona correctamente con GoDaddy.",
       }),
     });
 

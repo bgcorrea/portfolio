@@ -1,6 +1,6 @@
 # Backend - Sistema de Envío de Correos
 
-Este backend maneja el envío automático de correos cuando alguien completa el formulario de contacto.
+Este backend maneja el envío automático de correos cuando alguien completa el formulario de contacto usando GoDaddy.
 
 ## Configuración
 
@@ -10,45 +10,29 @@ Este backend maneja el envío automático de correos cuando alguien completa el 
 npm install
 ```
 
-### 2. Configurar Gmail OAuth2
+### 2. Configurar GoDaddy - Contraseña de Correo
 
-Para enviar correos desde `contacto@benjamincorrea.com`, necesitas configurar OAuth2 en Google Cloud Console:
+Para enviar correos desde `contacto@benjamincorrea.com` (GoDaddy), necesitas usar la contraseña de tu cuenta de correo:
 
-#### Paso 1: Crear proyecto en Google Cloud Console
+#### Paso 1: Acceder a tu cuenta de GoDaddy
 
-1. Ve a [Google Cloud Console](https://console.cloud.google.com/)
-2. Crea un nuevo proyecto o selecciona uno existente
-3. Habilita la API de Gmail
+1. Ve a [https://www.godaddy.com/](https://www.godaddy.com/)
+2. Inicia sesión con tu cuenta de GoDaddy
+3. Ve a **"Mis Productos" > "Correo electrónico"**
 
-#### Paso 2: Configurar OAuth2
+#### Paso 2: Obtener la contraseña
 
-1. Ve a "APIs & Services" > "Credentials"
-2. Haz clic en "Create Credentials" > "OAuth 2.0 Client IDs"
-3. Selecciona "Web application"
-4. Agrega `https://developers.google.com/oauthplayground` en "Authorized redirect URIs"
-5. Guarda el Client ID y Client Secret
-
-#### Paso 3: Obtener Refresh Token
-
-1. Ve a [Google OAuth Playground](https://developers.google.com/oauthplayground/)
-2. En la configuración (ícono de engranaje), marca "Use your own OAuth credentials"
-3. Ingresa tu Client ID y Client Secret
-4. En la lista de APIs, busca "Gmail API v1" y selecciona:
-   - `https://mail.google.com/`
-5. Haz clic en "Authorize APIs"
-6. Inicia sesión con tu cuenta `contacto@benjamincorrea.com`
-7. Haz clic en "Exchange authorization code for tokens"
-8. Copia el "Refresh token"
+1. Busca tu cuenta de correo `contacto@benjamincorrea.com`
+2. Haz clic en **"Administrar"**
+3. Ve a **"Configuración" > "Contraseña"**
+4. **Usa tu contraseña actual** o cambia la contraseña si es necesario
 
 ### 3. Configurar variables de entorno
 
 Crea un archivo `.env` en la carpeta `backend` con el siguiente contenido:
 
 ```env
-GMAIL_CLIENT_ID=tu_client_id_aqui
-GMAIL_CLIENT_SECRET=tu_client_secret_aqui
-GMAIL_REDIRECT_URI=https://developers.google.com/oauthplayground
-GMAIL_REFRESH_TOKEN=tu_refresh_token_aqui
+GODADDY_PASSWORD=tu_contraseña_de_correo_godaddy_aqui
 PORT=5000
 ```
 
@@ -101,6 +85,26 @@ Cuando alguien completa el formulario de contacto:
 
 ## Notas importantes
 
-- Asegúrate de que la cuenta `contacto@benjamincorrea.com` tenga habilitada la verificación en dos pasos
-- Los tokens de OAuth2 tienen una duración limitada, pero el refresh token se renueva automáticamente
-- En producción, considera usar variables de entorno seguras y no compartir las credenciales
+- **IMPORTANTE**: Usa la contraseña de tu cuenta de correo de GoDaddy
+- El servidor SMTP de GoDaddy es `smtpout.secureserver.net`
+- En producción, asegúrate de que las variables de entorno estén configuradas correctamente
+- Si tienes problemas, verifica que la contraseña sea correcta
+
+## Solución de problemas
+
+### Error de autenticación
+
+- Verifica que la contraseña de tu cuenta de correo sea correcta
+- Asegúrate de que la cuenta de correo esté activa en GoDaddy
+- Si cambiaste la contraseña recientemente, actualiza la variable de entorno
+
+### Error de conexión
+
+- Verifica que el puerto 587 esté disponible
+- Algunos proveedores de hosting pueden bloquear el puerto SMTP
+- El servidor SMTP de GoDaddy puede tener límites de envío
+
+### Límites de GoDaddy
+
+- GoDaddy tiene límites en el número de correos que puedes enviar por día
+- Verifica los límites de tu plan de correo en GoDaddy

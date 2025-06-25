@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
-const { google } = require("googleapis");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,31 +11,19 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Configuración de OAuth2 para Gmail
-const oauth2Client = new google.auth.OAuth2(
-  process.env.GMAIL_CLIENT_ID,
-  process.env.GMAIL_CLIENT_SECRET,
-  process.env.GMAIL_REDIRECT_URI
-);
-
-oauth2Client.setCredentials({
-  refresh_token: process.env.GMAIL_REFRESH_TOKEN,
-});
-
-// Crear transportador de correo
+// Crear transportador de correo para GoDaddy
 const createTransporter = async () => {
   try {
-    const accessToken = await oauth2Client.getAccessToken();
-
     return nodemailer.createTransporter({
-      service: "gmail",
+      host: "smtpout.secureserver.net", // Servidor SMTP de GoDaddy
+      port: 587,
+      secure: false, // true para 465, false para otros puertos
       auth: {
-        type: "OAuth2",
         user: "contacto@benjamincorrea.com",
-        clientId: process.env.GMAIL_CLIENT_ID,
-        clientSecret: process.env.GMAIL_CLIENT_SECRET,
-        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
-        accessToken: accessToken.token,
+        pass: process.env.GODADDY_PASSWORD, // Contraseña de tu cuenta de correo
+      },
+      tls: {
+        rejectUnauthorized: false,
       },
     });
   } catch (error) {

@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 // Crear transportador de correo para GoDaddy
 const createTransporter = async () => {
   try {
-    return nodemailer.createTransporter({
+    return nodemailer.createTransport({
       host: "smtpout.secureserver.net", // Servidor SMTP de GoDaddy
       port: 587,
       secure: false, // true para 465, false para otros puertos

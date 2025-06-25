@@ -4,7 +4,7 @@ const config = {
     apiUrl: "http://localhost:5000",
   },
   production: {
-    apiUrl: "https://tu-backend-produccion.com", // Cambiar por tu URL de producción
+    apiUrl: "https://portfolio-production-acab.up.railway.app",
   },
 };
 

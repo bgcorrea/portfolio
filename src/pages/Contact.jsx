@@ -30,7 +30,7 @@ const Contact = () => {
                   />
                 </svg>
                 <span className="text-amber-800 dark:text-amber-200 text-sm md:text-base">
-                  bgcorrea@uc.cl
+                  contacto@benjamincorrea.com
                 </span>
               </div>
               <div className="flex items-center space-x-3">

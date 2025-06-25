@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_URL } from "../config";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -26,16 +27,33 @@ const ContactForm = () => {
     setStatus({ type: "loading", message: "Enviando mensaje..." });
 
     try {
-      // Aquí iría la lógica de envío del formulario
-      // Por ahora solo simulamos un envío exitoso
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setStatus({
-        type: "success",
-        message:
-          "¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.",
+      const response = await fetch(`${API_URL}/api/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-      setFormData({ name: "", email: "", subject: "", message: "" });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus({
+          type: "success",
+          message:
+            "¡Mensaje enviado con éxito! Te he enviado un correo de confirmación.",
+        });
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus({
+          type: "error",
+          message:
+            data.message ||
+            "Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.",
+        });
+      }
     } catch (error) {
+      console.error("Error:", error);
       setStatus({
         type: "error",
         message:

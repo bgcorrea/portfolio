@@ -1,62 +1,83 @@
-# Portfolio Personal - Benjamín Correa
+# Portfolio - Benjamin Correa
 
-Este es mi portfolio personal desarrollado con React y Tailwind CSS, que muestra mis proyectos, habilidades y experiencia profesional.
+Portfolio personal desarrollado con React y Tailwind CSS, con sistema de envío automático de correos.
 
-## 🚀 Características
+## Características
 
-- Diseño responsive y moderno
-- Modo oscuro/claro
-- Secciones para proyectos, habilidades y contacto
-- Visualización de CV en formato PDF
-- Formulario de contacto funcional
+- **Frontend**: React con Tailwind CSS
+- **Backend**: Node.js con Express
+- **Sistema de correos**: Envío automático usando Gmail API
+- **Responsive**: Diseño adaptativo para todos los dispositivos
+- **Modo oscuro**: Soporte para tema claro y oscuro
 
-## 🛠️ Tecnologías Utilizadas
+## Sistema de Envío de Correos
 
-- React.js
-- Tailwind CSS
-- React Router
-- React PDF
-- Framer Motion
-- React Icons
+Cuando alguien completa el formulario de contacto:
 
-## 📦 Instalación
+1. **Correo al propietario**: Se envía automáticamente a `contacto@benjamincorrea.com` con los detalles del mensaje
+2. **Correo de confirmación**: Se envía automáticamente al remitente confirmando que se recibió su mensaje
 
-1. Clona el repositorio:
+### Configuración del Backend
 
-```bash
-git clone https://github.com/bgcorrea/portfolio.git
-```
+Sigue las instrucciones detalladas en [backend/README.md](backend/README.md) para configurar el envío de correos.
 
-2. Instala las dependencias:
+## Instalación y Uso
+
+### Frontend
 
 ```bash
-cd portfolio
+# Instalar dependencias
 npm install
+
+# Ejecutar en desarrollo
+npm start
+
+# Construir para producción
+npm run build
 ```
 
-3. Inicia el servidor de desarrollo:
+### Backend
 
 ```bash
+# Navegar al directorio del backend
+cd backend
+
+# Instalar dependencias
+npm install
+
+# Configurar variables de entorno (ver backend/README.md)
+# Crear archivo .env con las credenciales de Gmail
+
+# Ejecutar en desarrollo
+npm run dev
+
+# Ejecutar en producción
 npm start
 ```
 
-## 🌐 Uso
-
-El proyecto estará disponible en `https://www.benjamincorrea.com/`
-
-## 📝 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
-src/
-  ├── components/     # Componentes reutilizables
-  ├── pages/         # Páginas principales
-  └── App.jsx        # Componente principal
+portfolio/
+├── src/                    # Código fuente del frontend
+│   ├── components/         # Componentes reutilizables
+│   ├── pages/             # Páginas de la aplicación
+│   └── config.js          # Configuración del backend
+├── backend/               # Servidor Node.js
+│   ├── index.js           # Servidor principal
+│   ├── package.json       # Dependencias del backend
+│   └── README.md          # Instrucciones del backend
+└── public/                # Archivos estáticos
 ```
 
-## 🤝 Contribuciones
+## Tecnologías Utilizadas
 
-Las contribuciones son bienvenidas. Por favor, abre un issue primero para discutir los cambios que te gustaría hacer.
+- **Frontend**: React, Tailwind CSS, JavaScript
+- **Backend**: Node.js, Express, Nodemailer, Google APIs
+- **Despliegue**: Vercel (frontend), Render/Railway (backend)
 
-## 📞 Contacto
+## Contacto
 
-Benjamín Correa - [bgcorrea@uc.cl](mailto:bgcorrea@uc.cl)
+- **Email**: contacto@benjamincorrea.com
+- **Teléfono**: +56 9 7856 6046
+- **Ubicación**: Santiago, Chile

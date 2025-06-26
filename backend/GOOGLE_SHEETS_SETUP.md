@@ -84,3 +84,16 @@ Tu hoja debería verse así:
 - La hoja se actualiza automáticamente cada vez que alguien completa el formulario
 - Los datos se agregan con fecha y hora en zona horaria de Chile
 - Si hay un error con Google Sheets, el envío de correos sigue funcionando
+
+# Configuración de GoDaddy
+
+GODADDY_PASSWORD=tu_contraseña_de_correo_godaddy_aqui
+
+# Configuración de Google Sheets
+
+GOOGLE_SHEET_ID=11VW-YqDkFuJINYpW-im7LMgUvomhSbs5TLVtjTQdY-Y
+GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+
+# Puerto del servidor
+
+PORT=5000

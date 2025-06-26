@@ -97,3 +97,6 @@ GOOGLE_APPLICATION_CREDENTIALS=credentials.json
 # Puerto del servidor
 
 PORT=5000
+
+console.log("GOOGLE_SHEET_ID:", process.env.GOOGLE_SHEET_ID);
+console.log("GOOGLE_CREDENTIALS_JSON exists:", !!process.env.GOOGLE_CREDENTIALS_JSON);

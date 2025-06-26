@@ -1,6 +1,13 @@
-# Backend - Sistema de Envío de Correos
+# Backend - Sistema de Envío de Correos y Google Sheets
 
-Este backend maneja el envío automático de correos cuando alguien completa el formulario de contacto usando GoDaddy.
+Este backend maneja el envío automático de correos cuando alguien completa el formulario de contacto usando GoDaddy, y además guarda todos los datos en Google Sheets.
+
+## Características
+
+- ✅ Envío automático de correos a propietario y remitente
+- ✅ Almacenamiento automático en Google Sheets
+- ✅ Timestamp con zona horaria de Chile
+- ✅ Manejo de errores sin interrumpir el envío de correos
 
 ## Configuración
 
@@ -27,16 +34,22 @@ Para enviar correos desde `contacto@benjamincorrea.com` (GoDaddy), necesitas usa
 3. Ve a **"Configuración" > "Contraseña"**
 4. **Usa tu contraseña actual** o cambia la contraseña si es necesario
 
-### 3. Configurar variables de entorno
+### 3. Configurar Google Sheets
+
+Sigue las instrucciones detalladas en [GOOGLE_SHEETS_SETUP.md](GOOGLE_SHEETS_SETUP.md)
+
+### 4. Configurar variables de entorno
 
 Crea un archivo `.env` en la carpeta `backend` con el siguiente contenido:
 
 ```env
 GODADDY_PASSWORD=tu_contraseña_de_correo_godaddy_aqui
+GOOGLE_SHEET_ID=tu_id_de_google_sheet_aqui
+GOOGLE_APPLICATION_CREDENTIALS=credentials.json
 PORT=5000
 ```
 
-### 4. Ejecutar el servidor
+### 5. Ejecutar el servidor
 
 ```bash
 # Desarrollo (con nodemon)
@@ -50,7 +63,7 @@ npm start
 
 ### POST /api/contact
 
-Envía correos automáticos tanto al propietario como al remitente.
+Envía correos automáticos y guarda datos en Google Sheets.
 
 **Body:**
 
@@ -82,6 +95,15 @@ Cuando alguien completa el formulario de contacto:
 
 1. **Correo al propietario**: Se envía un correo a `contacto@benjamincorrea.com` con los detalles del mensaje
 2. **Correo de confirmación**: Se envía un correo automático al remitente confirmando que se recibió su mensaje
+3. **Google Sheets**: Se agrega automáticamente una fila con todos los datos del formulario
+
+## Estructura de Google Sheets
+
+La hoja se actualiza automáticamente con las siguientes columnas:
+
+| Fecha y Hora        | Nombre     | Email            | Asunto   | Mensaje              |
+| ------------------- | ---------- | ---------------- | -------- | -------------------- |
+| 25/06/2025 20:01:30 | Juan Pérez | juan@ejemplo.com | Consulta | Hola, me interesa... |
 
 ## Notas importantes
 
@@ -89,6 +111,8 @@ Cuando alguien completa el formulario de contacto:
 - El servidor SMTP de GoDaddy es `smtpout.secureserver.net`
 - En producción, asegúrate de que las variables de entorno estén configuradas correctamente
 - Si tienes problemas, verifica que la contraseña sea correcta
+- El archivo `credentials.json` contiene información sensible, no lo subas a GitHub
+- Si hay un error con Google Sheets, el envío de correos sigue funcionando
 
 ## Solución de problemas
 
@@ -103,6 +127,12 @@ Cuando alguien completa el formulario de contacto:
 - Verifica que el puerto 587 esté disponible
 - Algunos proveedores de hosting pueden bloquear el puerto SMTP
 - El servidor SMTP de GoDaddy puede tener límites de envío
+
+### Error de Google Sheets
+
+- Verifica que el archivo `credentials.json` esté correcto
+- Asegúrate de que la hoja de cálculo esté compartida con el service account
+- Verifica que el `GOOGLE_SHEET_ID` sea correcto
 
 ### Límites de GoDaddy
 

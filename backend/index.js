@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,6 +11,57 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+
+// Configuración de Google Sheets
+const auth = new google.auth.GoogleAuth({
+  credentials: process.env.GOOGLE_CREDENTIALS_JSON
+    ? JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON)
+    : undefined,
+  keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS || "credentials.json",
+  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+});
+
+const sheets = google.sheets({ version: "v4", auth });
+
+// Función para agregar datos a Google Sheets
+const addToGoogleSheets = async (formData) => {
+  try {
+    const timestamp = new Date().toLocaleString("es-CL", {
+      timeZone: "America/Santiago",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+
+    const values = [
+      [
+        timestamp, // Fecha y hora
+        formData.name, // Nombre
+        formData.email, // Email
+        formData.subject, // Asunto
+        formData.message, // Mensaje
+      ],
+    ];
+
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      range: "Contactos!A:E", // Rango donde agregar datos
+      valueInputOption: "RAW",
+      insertDataOption: "INSERT_ROWS",
+      resource: {
+        values: values,
+      },
+    });
+
+    console.log("Datos agregados a Google Sheets exitosamente");
+  } catch (error) {
+    console.error("Error agregando datos a Google Sheets:", error);
+    // No lanzamos el error para no interrumpir el envío de correos
+  }
+};
 
 // Crear transportador de correo para GoDaddy
 const createTransporter = async () => {
@@ -44,6 +96,11 @@ app.post("/api/contact", async (req, res) => {
         message: "Todos los campos son requeridos",
       });
     }
+
+    const formData = { name, email, subject, message };
+
+    // Agregar datos a Google Sheets (en paralelo con el envío de correos)
+    addToGoogleSheets(formData);
 
     const transporter = await createTransporter();
 
@@ -91,7 +148,7 @@ app.post("/api/contact", async (req, res) => {
             </div>
           </div>
           
-          <p>Mientras tanto, puedes revisar mi <a href="https://benjamincorrea.com" style="color: #92400e;">portfolio</a> para conocer más sobre mi trabajo.</p>
+          <p>Mientras tanto, puedes revisar mi <a href="https://benjamincorrea.com/projects" style="color: #92400e;">portfolio</a> para conocer más sobre mi trabajo.</p>
           
           <p>Saludos,<br>
           <strong>Benjamin Correa</strong></p>

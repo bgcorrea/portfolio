@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
-import ContactForm from "../components/ContactForm";
+import LeadMagnetForm from "../components/LeadMagnetForm";
 import Footer from "../components/Footer";
 import ScrollAnimatedSection from "../components/ScrollAnimatedSection";
 import Cal, { getCalApi } from "@calcom/embed-react";
@@ -681,7 +681,7 @@ const Automatizaciones = () => {
 
                 {/* Contenido del formulario */}
                 <div className="relative z-10">
-                  <ContactForm />
+                  <LeadMagnetForm />
                 </div>
               </motion.div>
             </motion.div>

@@ -1,14 +1,57 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import Home from "./pages/Home";
-import Projects from "./pages/Projects";
-import CV from "./pages/CV";
-import Contact from "./pages/Contact";
+import Automatizaciones from "./pages/Automatizaciones";
+import Privacidad from "./pages/Privacidad";
+import Cookies from "./pages/Cookies";
+import Redes from "./pages/Redes";
+import AnalyticsDashboard from "./pages/AnalyticsDashboard";
 import Navbar from "./components/Navbar";
+import CookieBanner from "./components/CookieBanner";
+import CookieManager from "./components/CookieManager";
+import CookieConsent from "./components/CookieConsent";
+
+// Componente interno para manejar el navbar condicional
+const AppContent = ({ darkMode }) => {
+  const location = useLocation();
+  const isDashboard = location.pathname === "/analytics-dashboard";
+
+  return (
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-500">
+      {!isDashboard && <Navbar />}
+      <main
+        className={isDashboard ? "min-h-screen" : "min-h-[calc(100vh-4rem)]"}
+      >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/automatizaciones" element={<Automatizaciones />} />
+          <Route path="/privacidad" element={<Privacidad />} />
+          <Route path="/cookies" element={<Cookies />} />
+          <Route path="/redes" element={<Redes />} />
+          <Route path="/analytics-dashboard" element={<AnalyticsDashboard />} />
+        </Routes>
+      </main>
+
+      {/* Cookie Banner */}
+      <CookieBanner />
+
+      {/* Cookie Manager */}
+      <CookieManager />
+
+      {/* Cookie Consent Global */}
+      <CookieConsent />
+    </div>
+  );
+};
 
 const App = () => {
   // Inicializar el estado del modo oscuro desde localStorage
-  const [darkMode, setDarkMode] = useState(() => {
+  const [darkMode] = useState(() => {
     const savedMode = localStorage.getItem("darkMode");
     return savedMode ? JSON.parse(savedMode) : false;
   });
@@ -27,25 +70,20 @@ const App = () => {
     }
   }, [darkMode]);
 
-  const toggleDarkMode = () => {
-    console.log("Cambiando modo:", !darkMode);
-    setDarkMode(!darkMode);
-  };
+  // const toggleDarkMode = () => {
+  //   console.log("Cambiando modo:", !darkMode);
+  //   setDarkMode(!darkMode);
+  // };
 
   return (
     <div className={darkMode ? "dark" : ""}>
-      <Router>
-        <div className="min-h-screen bg-amber-50 dark:bg-gray-900 transition-colors duration-500">
-          <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-          <main className="min-h-[calc(100vh-4rem)]">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/cv" element={<CV />} />
-              <Route path="/contact" element={<Contact />} />
-            </Routes>
-          </main>
-        </div>
+      <Router
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
+        <AppContent darkMode={darkMode} />
       </Router>
     </div>
   );

@@ -1,12 +1,26 @@
 import { useState } from "react";
 import { API_URL } from "../config";
 
-const ContactForm = () => {
+const ContactForm = ({
+  defaultSubject = "",
+  successMessage = "¡Mensaje enviado con éxito! Te he enviado un correo de confirmación.",
+  tags = [],
+  extraFields = {},
+  variant = "default",
+  children,
+  hideFields = [],
+  buttonText = "Enviar Mensaje",
+  showPrivacyCheckbox = false,
+  privacyText = "Acepto recibir recursos y actualizaciones.",
+  privacyLink = "/privacidad",
+}) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "",
+    subject: defaultSubject || "",
     message: "",
+    privacyAccepted: false,
+    ...extraFields,
   });
 
   const [status, setStatus] = useState({
@@ -15,10 +29,10 @@ const ContactForm = () => {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -32,7 +46,10 @@ const ContactForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          tags,
+        }),
       });
 
       const data = await response.json();
@@ -40,10 +57,16 @@ const ContactForm = () => {
       if (data.success) {
         setStatus({
           type: "success",
-          message:
-            "¡Mensaje enviado con éxito! Te he enviado un correo de confirmación.",
+          message: successMessage,
         });
-        setFormData({ name: "", email: "", subject: "", message: "" });
+        setFormData({
+          name: "",
+          email: "",
+          subject: defaultSubject || "",
+          message: "",
+          privacyAccepted: false,
+          ...extraFields,
+        });
       } else {
         setStatus({
           type: "error",
@@ -62,13 +85,19 @@ const ContactForm = () => {
     }
   };
 
+  const containerClasses =
+    variant === "compact"
+      ? "bg-white rounded-lg p-4 border border-gray-200"
+      : "bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg p-6 border border-gray-200 dark:border-gray-700";
+
   return (
-    <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg p-6 border border-amber-100 dark:border-gray-700">
+    <div className={containerClasses}>
+      {children}
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-amber-900 dark:text-amber-50"
+            className="block text-sm font-medium text-gray-900 dark:text-gray-100"
           >
             Nombre
           </label>
@@ -79,14 +108,14 @@ const ContactForm = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-amber-300 dark:border-gray-600 shadow-sm focus:border-amber-500 focus:ring-amber-500 dark:bg-gray-700/50 dark:text-amber-50"
+            className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700/50 dark:text-gray-100"
           />
         </div>
 
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-amber-900 dark:text-amber-50"
+            className="block text-sm font-medium text-gray-900 dark:text-gray-100"
           >
             Email
           </label>
@@ -97,51 +126,79 @@ const ContactForm = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-amber-300 dark:border-gray-600 shadow-sm focus:border-amber-500 focus:ring-amber-500 dark:bg-gray-700/50 dark:text-amber-50"
+            className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700/50 dark:text-gray-100"
           />
         </div>
 
-        <div>
-          <label
-            htmlFor="subject"
-            className="block text-sm font-medium text-amber-900 dark:text-amber-50"
-          >
-            Asunto
-          </label>
-          <input
-            type="text"
-            id="subject"
-            name="subject"
-            value={formData.subject}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-amber-300 dark:border-gray-600 shadow-sm focus:border-amber-500 focus:ring-amber-500 dark:bg-gray-700/50 dark:text-amber-50"
-          />
-        </div>
+        {!hideFields.includes("subject") && (
+          <div>
+            <label
+              htmlFor="subject"
+              className="block text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
+              Asunto
+            </label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700/50 dark:text-gray-100"
+            />
+          </div>
+        )}
 
-        <div>
-          <label
-            htmlFor="message"
-            className="block text-sm font-medium text-amber-900 dark:text-amber-50"
-          >
-            Mensaje
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-            rows={4}
-            className="mt-1 block w-full rounded-md border-amber-300 dark:border-gray-600 shadow-sm focus:border-amber-500 focus:ring-amber-500 dark:bg-gray-700/50 dark:text-amber-50"
-          />
-        </div>
+        {!hideFields.includes("message") && (
+          <div>
+            <label
+              htmlFor="message"
+              className="block text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
+              Mensaje
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+              rows={4}
+              className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700/50 dark:text-gray-100"
+            />
+          </div>
+        )}
+
+        {showPrivacyCheckbox && (
+          <div className="flex items-start space-x-2">
+            <input
+              type="checkbox"
+              id="privacyAccepted"
+              name="privacyAccepted"
+              checked={formData.privacyAccepted}
+              onChange={handleChange}
+              required
+              className="mt-1 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            />
+            <label htmlFor="privacyAccepted" className="text-sm text-gray-600">
+              {privacyText}
+              {". "}
+              <a
+                href={privacyLink}
+                className="text-indigo-600 hover:text-indigo-800 underline"
+              >
+                Privacidad
+              </a>
+            </label>
+          </div>
+        )}
 
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 dark:focus:ring-offset-gray-800"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
         >
-          Enviar Mensaje
+          {buttonText}
         </button>
 
         {status.message && (
@@ -153,6 +210,8 @@ const ContactForm = () => {
                 ? "bg-red-50/80 dark:bg-red-900/80 text-red-800 dark:text-red-200"
                 : "bg-amber-50/80 dark:bg-amber-900/80 text-amber-800 dark:text-amber-200"
             }`}
+            role="status"
+            aria-live="polite"
           >
             {status.message}
           </div>

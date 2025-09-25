@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
 import Cal, { getCalApi } from "@calcom/embed-react";
@@ -233,6 +234,13 @@ const Automatizaciones = () => {
 
   return (
     <main className="min-h-screen bg-white text-gray-900 pb-20 sm:pb-0">
+      <Helmet>
+        <title>Automatizaciones | Benjamín Correa</title>
+        <meta
+          name="description"
+          content="Servicios de automatización empresarial - Optimiza procesos, reduce costos y aumenta la eficiencia de tu negocio"
+        />
+      </Helmet>
       {/* Navbar Flotante */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

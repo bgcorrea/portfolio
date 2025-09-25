@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
 
@@ -17,28 +18,20 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showContent, setShowContent] = useState(false);
 
-  // Verificar si es la primera visita
+  // Mostrar loading por exactamente 1 segundo
   useEffect(() => {
-    const hasVisited = localStorage.getItem("hasVisitedHome");
+    setIsLoading(true);
+    setShowContent(false);
 
-    if (!hasVisited) {
-      // Primera visita - mostrar loading
-      setIsLoading(true);
-      setShowContent(false);
-      localStorage.setItem("hasVisitedHome", "true");
+    // Tiempo de carga fijo de 1 segundo
+    const loadingTime = 1000; // Exactamente 1000ms
 
-      // Simular tiempo de carga
-      setTimeout(() => {
-        setIsLoading(false);
-        setTimeout(() => {
-          setShowContent(true);
-        }, 500);
-      }, 3000);
-    } else {
-      // Ya visitó antes - mostrar contenido directamente
+    setTimeout(() => {
       setIsLoading(false);
-      setShowContent(true);
-    }
+      setTimeout(() => {
+        setShowContent(true);
+      }, 300); // Transición suave
+    }, loadingTime);
   }, []);
 
   const socialLinks = {
@@ -131,9 +124,9 @@ const Home = () => {
         <div className="mt-8">
           <div className="w-64 h-1 bg-gray-200 rounded-full overflow-hidden">
             <div
-              className="h-full bg-indigo-600 rounded-full animate-pulse"
+              className="h-full bg-indigo-600 rounded-full"
               style={{
-                animation: "loading-bar 3s ease-in-out",
+                animation: "loading-bar 1s ease-in-out forwards",
               }}
             ></div>
           </div>
@@ -144,9 +137,10 @@ const Home = () => {
           __html: `
           @keyframes loading-bar {
             0% { width: 0%; }
-            30% { width: 25%; }
-            60% { width: 60%; }
-            85% { width: 85%; }
+            20% { width: 30%; }
+            40% { width: 60%; }
+            60% { width: 80%; }
+            80% { width: 95%; }
             100% { width: 100%; }
           }
         `,
@@ -157,6 +151,14 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        <title>Benjamín Correa | Automatizaciones</title>
+        <meta
+          name="description"
+          content="Especialista en Automatizaciones - Optimiza tu negocio con tecnología avanzada"
+        />
+      </Helmet>
+
       {/* Loading Screen */}
       {isLoading && <LoadingScreen />}
 

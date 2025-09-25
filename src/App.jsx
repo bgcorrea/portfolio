@@ -5,6 +5,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import CookieBanner from "./components/CookieBanner";
@@ -80,16 +81,18 @@ const App = () => {
   // };
 
   return (
-    <div className={darkMode ? "dark" : ""}>
-      <Router
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <AppContent darkMode={darkMode} />
-      </Router>
-    </div>
+    <HelmetProvider>
+      <div className={darkMode ? "dark" : ""}>
+        <Router
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
+          <AppContent darkMode={darkMode} />
+        </Router>
+      </div>
+    </HelmetProvider>
   );
 };
 

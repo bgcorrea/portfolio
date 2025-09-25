@@ -177,7 +177,7 @@ const Home = () => {
                 <div className="flex-shrink-0">
                   <div className="w-48 h-48 lg:w-64 lg:h-64 rounded-full overflow-hidden border-4 border-indigo-200 shadow-xl">
                     <img
-                      src="/img/profile.jpeg"
+                      src="/img/profile.png"
                       alt="Benjamín Correa"
                       className="w-full h-full object-cover"
                     />

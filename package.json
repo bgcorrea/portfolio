@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && cp -r public/img build/ && cp public/CV.pdf build/",
+    "build": "react-scripts build && cp -r public/img build/ && cp public/CV.pdf build/ && cp -r public/lead-magnet build/",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "vercel-build": "npm run build"

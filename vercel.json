@@ -9,6 +9,10 @@
       "dest": "/CV.pdf"
     },
     {
+      "src": "/lead-magnet/(.*)",
+      "dest": "/lead-magnet/$1"
+    },
+    {
       "src": "/img/(.*)",
       "dest": "/img/$1"
     },

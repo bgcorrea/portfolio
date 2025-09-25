@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
@@ -18,7 +19,7 @@
     "express": "^5.1.0",
     "google-auth-library": "^10.1.0",
     "googleapis": "^150.0.1",
-    "nodemailer": "^7.0.3"
+    "resend": "^6.1.0"
   },
   "devDependencies": {
     "node-fetch": "^2.7.0",

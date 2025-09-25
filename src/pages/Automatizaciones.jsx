@@ -36,7 +36,7 @@ function useCalEmbed() {
     };
 
     (async function () {
-      const cal = await getCalApi({ namespace: "diagnostico-45min" });
+      const cal = await getCalApi({ namespace: "diagnostico-30min" });
       cal("ui", {
         theme: "light",
         hideEventTypeDetails: false,
@@ -673,25 +673,7 @@ const Automatizaciones = () => {
 
                 {/* Contenido del formulario */}
                 <div className="relative z-10">
-                  <ContactForm
-                    defaultSubject="Lead Magnet: Checklist 5 procesos"
-                    successMessage="¡Listo! Te envié el checklist a tu correo."
-                    tags={[
-                      "lead-magnet",
-                      "automatizaciones",
-                      "LP_Automatizaciones",
-                    ]}
-                    extraFields={{
-                      lead_source: "LP_Automatizaciones",
-                      lead_magnet: "Checklist_5_procesos",
-                      utm_campaign: "automatizaciones_lp",
-                    }}
-                    hideFields={["subject", "message"]}
-                    buttonText="Descargar checklist gratis"
-                    showPrivacyCheckbox={true}
-                    privacyText="Acepto recibir recursos y actualizaciones"
-                    privacyLink="/privacidad"
-                  />
+                  <ContactForm />
                 </div>
               </motion.div>
             </motion.div>
@@ -729,8 +711,8 @@ const Automatizaciones = () => {
               transition={{ delay: 0.4, duration: 0.6 }}
             >
               <Cal
-                namespace="diagnostico-45min"
-                calLink="benjamin-correa-8pbfpd/diagnostico-45min"
+                namespace="diagnostico-30min"
+                calLink="benjamin-correa-8pbfpd/diagnostico-30min"
                 style={{ width: "100%", height: "600px", overflow: "scroll" }}
                 config={{ layout: "month_view", theme: "light" }}
               />

@@ -4,8 +4,8 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import { google } from "googleapis";
 import {
-  sendContactEmail,
-  sendConfirmationEmail,
+  sendClientAutoReply,
+  sendInternalNotification,
 } from "./src/lib/email/resend.js";
 
 dotenv.config();
@@ -92,12 +92,12 @@ app.post("/api/contact", async (req, res) => {
     addToGoogleSheets(formData);
 
     // Enviar correos con Resend (sin bloquear la respuesta)
-    sendContactEmail({ name, email, subject, message }).catch((err) =>
-      console.error("EMAIL ERROR:", err)
+    sendClientAutoReply({ name, email, message }).catch((err) =>
+      console.error("CLIENT AUTO REPLY ERROR:", err)
     );
 
-    sendConfirmationEmail({ name, email, subject, message }).catch((err) =>
-      console.error("CONFIRMATION EMAIL ERROR:", err)
+    sendInternalNotification({ name, email, message }).catch((err) =>
+      console.error("INTERNAL NOTIFICATION ERROR:", err)
     );
 
     res.json({

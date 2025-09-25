@@ -1,8 +1,8 @@
 // Script de prueba para verificar la configuración de Resend
 import dotenv from "dotenv";
 import {
-  sendContactEmail,
-  sendConfirmationEmail,
+  sendClientAutoReply,
+  sendInternalNotification,
 } from "./src/lib/email/resend.js";
 
 dotenv.config();
@@ -33,13 +33,13 @@ async function testResend() {
         "Este es un mensaje de prueba para verificar que Resend funciona correctamente.",
     };
 
-    console.log("\n📤 Enviando correo de contacto...");
-    await sendContactEmail(testData);
-    console.log("✅ Correo de contacto enviado exitosamente");
+    console.log("\n📤 Enviando auto-respuesta al cliente...");
+    await sendClientAutoReply(testData);
+    console.log("✅ Auto-respuesta enviada exitosamente");
 
-    console.log("\n📤 Enviando correo de confirmación...");
-    await sendConfirmationEmail(testData);
-    console.log("✅ Correo de confirmación enviado exitosamente");
+    console.log("\n📤 Enviando notificación interna...");
+    await sendInternalNotification(testData);
+    console.log("✅ Notificación interna enviada exitosamente");
 
     console.log(
       "\n🎉 ¡Todas las pruebas pasaron! Resend está configurado correctamente."

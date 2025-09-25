@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
+import ScrollAnimatedSection from "../components/ScrollAnimatedSection";
 import Cal, { getCalApi } from "@calcom/embed-react";
 
 // Hook para configurar Cal.com
@@ -300,7 +301,7 @@ const Automatizaciones = () => {
         }}
       >
         <div className="absolute inset-0 bg-white/80"></div>
-        <div className="relative mx-auto max-w-4xl text-center">
+        <ScrollAnimatedSection className="relative mx-auto max-w-4xl text-center">
           <motion.h1
             className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight"
             initial={{ opacity: 0, y: 30 }}
@@ -382,7 +383,7 @@ const Automatizaciones = () => {
             ⚡ <strong>Resultados en 30 días</strong> ·{" "}
             <strong>Flujos documentados y monitoreados</strong>
           </motion.div>
-        </div>
+        </ScrollAnimatedSection>
       </section>
 
       {/* LEAD MAGNET */}
@@ -393,7 +394,7 @@ const Automatizaciones = () => {
         {/* Gradiente de fondo para toda la sección */}
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-indigo-100"></div>
 
-        <div className="relative mx-auto max-w-6xl">
+        <ScrollAnimatedSection className="relative mx-auto max-w-6xl" delay={200}>
           <motion.div
             className="text-center mb-12"
             initial="hidden"
@@ -678,12 +679,12 @@ const Automatizaciones = () => {
               </motion.div>
             </motion.div>
           </div>
-        </div>
+        </ScrollAnimatedSection>
       </section>
 
       {/* CALENDARIO EMBEBIDO */}
       <section id="diagnostico-gratuito" className="py-16 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
+        <ScrollAnimatedSection className="max-w-6xl mx-auto" delay={400}>
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -718,7 +719,7 @@ const Automatizaciones = () => {
               />
             </motion.div>
           </motion.div>
-        </div>
+        </ScrollAnimatedSection>
       </section>
 
       {/* Footer */}

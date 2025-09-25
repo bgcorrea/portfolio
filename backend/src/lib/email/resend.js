@@ -11,12 +11,15 @@ const CAL_LINK = "https://cal.com/benjamin-correa-8pbfpd/diagnostico-30min";
  * Enlaces de redes sociales extraídos del Home.jsx
  */
 const SOCIAL_LINKS = [
-  { label: "GitHub",   href: "https://github.com/bgcorrea" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/benjamin-correa-penaloza/" },
-  { label: "Instagram",href: "https://www.instagram.com/soybenjacorrea" },
-  { label: "TikTok",   href: "https://www.tiktok.com/@bgcorrea" },
-  { label: "YouTube",  href: "https://www.youtube.com/@bgcorrea" },
-  { label: "Email",    href: "mailto:contacto@benjamincorrea.com" },
+  { label: "GitHub", href: "https://github.com/bgcorrea" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/benjamin-correa-penaloza/",
+  },
+  { label: "Instagram", href: "https://www.instagram.com/soybenjacorrea" },
+  { label: "TikTok", href: "https://www.tiktok.com/@bgcorrea" },
+  { label: "YouTube", href: "https://www.youtube.com/@bgcorrea" },
+  { label: "Email", href: "mailto:contacto@benjamincorrea.com" },
 ];
 
 function baseWrap(innerHtml) {
@@ -52,12 +55,14 @@ function headerBlock() {
 
 function footerBlock() {
   // Botones tipo "pill" (compatibles con clientes de correo)
-  const pills = SOCIAL_LINKS.map(s => `
+  const pills = SOCIAL_LINKS.map(
+    (s) => `
     <a href="${s.href}" target="_blank"
        style="display:inline-block;margin:0 8px 8px 0;padding:8px 12px;border:1px solid #7B7AE6;border-radius:999px;
               color:#7B7AE6;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;">
       ${s.label}
-    </a>`).join("");
+    </a>`
+  ).join("");
 
   return `<tr>
     <td style="padding:18px 32px;background:#F5F7FE;border-top:1px solid #E5E7EB;">
@@ -76,7 +81,7 @@ function footerBlock() {
 function clientHtml({ name, email, message }) {
   const safeName = escapeHtml(name || "");
   const safeEmail = escapeHtml(email || "");
-  const safeMsg = (escapeHtml(message || "")).replace(/\n/g, "<br/>");
+  const safeMsg = escapeHtml(message || "").replace(/\n/g, "<br/>");
   const body = `
     ${headerBlock()}
     <tr><td style="padding:20px 32px;font-family:Arial,Helvetica,sans-serif;color:#111827;">
@@ -105,9 +110,6 @@ function clientHtml({ name, email, message }) {
         <div style="font-size:14px;color:#111827;line-height:1.7;">${safeMsg}</div>
       </div>
 
-      <p style="margin:12px 0 0 0;color:#6B7280;font-size:13px;">
-        Si prefieres, puedes responder a este correo: <a href="mailto:${safeEmail}" style="color:#7B7AE6;text-decoration:none;">${safeEmail}</a>
-      </p>
 
       <div style="height:8px;"></div>
       <p style="margin:0;color:#111827;font-size:14px;">Un abrazo,<br/>Benjamín</p>
@@ -121,7 +123,7 @@ function clientHtml({ name, email, message }) {
 function internalHtml({ name, email, message }) {
   const safeName = escapeHtml(name || "");
   const safeEmail = escapeHtml(email || "");
-  const safeMsg = (escapeHtml(message || "")).replace(/\n/g, "<br/>");
+  const safeMsg = escapeHtml(message || "").replace(/\n/g, "<br/>");
   const body = `
     ${headerBlock()}
     <tr><td style="padding:20px 32px;font-family:Arial,Helvetica,sans-serif;color:#111827;">
@@ -145,7 +147,10 @@ function internalHtml({ name, email, message }) {
 
 /** ---------- HELPERS & SENDERS ---------- */
 function escapeHtml(str = "") {
-  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 export async function sendClientAutoReply({ name, email, message }) {
@@ -156,7 +161,7 @@ export async function sendClientAutoReply({ name, email, message }) {
     CAL_LINK,
     "",
     "Tu mensaje:",
-    message || ""
+    message || "",
   ].join("\n");
 
   const { error } = await resend.emails.send({
@@ -179,7 +184,7 @@ export async function sendInternalNotification({ name, email, message }) {
     "Mensaje:",
     message || "",
     "",
-    `Agenda: ${CAL_LINK}`
+    `Agenda: ${CAL_LINK}`,
   ].join("\n");
 
   const { error } = await resend.emails.send({

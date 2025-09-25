@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
+import ScrollAnimatedSection from "../components/ScrollAnimatedSection";
 
 const Home = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState({});
@@ -171,7 +172,7 @@ const Home = () => {
         >
           {/* Hero Section */}
           <section className="pt-24 px-4 py-16 md:pt-28 md:py-24 bg-gradient-to-br from-indigo-50 to-white">
-            <div className="max-w-6xl mx-auto">
+            <ScrollAnimatedSection className="max-w-6xl mx-auto">
               <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
                 <div className="flex-shrink-0">
                   <div className="w-48 h-48 lg:w-64 lg:h-64 rounded-full overflow-hidden border-4 border-indigo-200 shadow-xl">
@@ -258,12 +259,12 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </ScrollAnimatedSection>
           </section>
 
           {/* About Section */}
           <section className="py-16 px-4 bg-white">
-            <div className="max-w-6xl mx-auto">
+            <ScrollAnimatedSection className="max-w-6xl mx-auto" delay={200}>
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                   Sobre Mí
@@ -335,12 +336,12 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </ScrollAnimatedSection>
           </section>
 
           {/* Projects Section */}
           <section className="py-16 px-4 bg-gray-50">
-            <div className="max-w-6xl mx-auto">
+            <ScrollAnimatedSection className="max-w-6xl mx-auto" delay={400}>
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                   Proyectos Destacados
@@ -395,12 +396,12 @@ const Home = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </ScrollAnimatedSection>
           </section>
 
           {/* Contact Section */}
           <section id="contact" className="py-16 px-4 bg-white">
-            <div className="max-w-6xl mx-auto">
+            <ScrollAnimatedSection className="max-w-6xl mx-auto" delay={600}>
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                   Contacto
@@ -496,7 +497,7 @@ const Home = () => {
                   <ContactForm />
                 </div>
               </div>
-            </div>
+            </ScrollAnimatedSection>
           </section>
 
           {/* Footer */}

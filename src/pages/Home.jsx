@@ -139,25 +139,19 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <style jsx>{`
-        @keyframes loading-bar {
-          0% {
-            width: 0%;
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+          @keyframes loading-bar {
+            0% { width: 0%; }
+            30% { width: 25%; }
+            60% { width: 60%; }
+            85% { width: 85%; }
+            100% { width: 100%; }
           }
-          30% {
-            width: 25%;
-          }
-          60% {
-            width: 60%;
-          }
-          85% {
-            width: 85%;
-          }
-          100% {
-            width: 100%;
-          }
-        }
-      `}</style>
+        `,
+        }}
+      />
     </div>
   );
 

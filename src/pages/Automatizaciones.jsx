@@ -7,6 +7,33 @@ import Cal, { getCalApi } from "@calcom/embed-react";
 // Hook para configurar Cal.com
 function useCalEmbed() {
   useEffect(() => {
+    // Suprimir warnings específicos de Cal.com
+    const originalWarn = console.warn;
+    const originalLog = console.log;
+
+    console.warn = function (...args) {
+      const message = args.join(" ");
+      // Filtrar warnings específicos de Cal.com
+      if (
+        message.includes("markdownToSafeHTML") ||
+        message.includes("createWithEqualityFn") ||
+        message.includes("react-i18next") ||
+        message.includes("QuickAvailabilityCheck")
+      ) {
+        return; // No mostrar estos warnings
+      }
+      originalWarn.apply(console, args);
+    };
+
+    console.log = function (...args) {
+      const message = args.join(" ");
+      // Filtrar logs específicos de Cal.com
+      if (message.includes("QuickAvailabilityCheck feature enabled")) {
+        return; // No mostrar estos logs
+      }
+      originalLog.apply(console, args);
+    };
+
     (async function () {
       const cal = await getCalApi({ namespace: "diagnostico-45min" });
       cal("ui", {
@@ -15,6 +42,12 @@ function useCalEmbed() {
         layout: "month_view",
       });
     })();
+
+    // Restaurar console cuando el componente se desmonte
+    return () => {
+      console.warn = originalWarn;
+      console.log = originalLog;
+    };
   }, []);
 }
 

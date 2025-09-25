@@ -8,29 +8,34 @@ export const useCookies = () => {
     marketing: false,
   });
 
-  const [hasConsent, setHasConsent] = useState(false);
+  const [hasConsent, setHasConsent] = useState(() => {
+    // Leer directamente del localStorage en la inicialización
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("cookieConsent") === "true";
+    }
+    return false;
+  });
 
   useEffect(() => {
-    // Cargar preferencias desde localStorage
-    const consent = localStorage.getItem("cookieConsent");
-    const savedPreferences = localStorage.getItem("cookiePreferences");
-
-    if (consent === "true") {
-      setHasConsent(true);
+    // Solo cargar scripts si ya hay consentimiento
+    if (hasConsent) {
+      const savedPreferences = localStorage.getItem("cookiePreferences");
       if (savedPreferences) {
         const prefs = JSON.parse(savedPreferences);
         setPreferences(prefs);
 
-        // Cargar scripts según las preferencias guardadas
-        if (prefs.analytics) {
-          loadGoogleAnalytics();
-        }
-        if (prefs.marketing) {
-          loadMetaPixel();
-        }
+        // Cargar scripts según las preferencias guardadas de forma asíncrona
+        setTimeout(() => {
+          if (prefs.analytics) {
+            loadGoogleAnalytics();
+          }
+          if (prefs.marketing) {
+            loadMetaPixel();
+          }
+        }, 500);
       }
     }
-  }, []);
+  }, [hasConsent]);
 
   const updatePreferences = (newPreferences) => {
     const oldPreferences = preferences;
@@ -96,7 +101,14 @@ const loadGoogleAnalytics = () => {
 };
 
 const loadMetaPixel = () => {
-  // Cargar Meta Pixel
+  // Solo cargar Meta Pixel si hay un ID válido configurado
+  const pixelId = "META_PIXEL_ID";
+  if (!pixelId || pixelId === "META_PIXEL_ID") {
+    // No hay ID válido, crear función mock
+    window.fbq = function () {};
+    return;
+  }
+
   if (typeof window !== "undefined" && !window.fbq) {
     const loadPixel = function (f, b, e, v, n, t, s) {
       if (f.fbq) return;
@@ -113,18 +125,26 @@ const loadMetaPixel = () => {
       t = b.createElement(e);
       t.async = !0;
       t.src = v;
+      t.onerror = function () {
+        window.fbq = function () {};
+      };
       s = b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t, s);
     };
 
-    loadPixel(
-      window,
-      document,
-      "script",
-      "https://connect.facebook.net/en_US/fbevents.js"
-    );
-    window.fbq("init", "META_PIXEL_ID");
-    window.fbq("track", "PageView");
+    try {
+      loadPixel(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js"
+      );
+      // Inicializar con el ID válido
+      window.fbq("init", pixelId);
+      window.fbq("track", "PageView");
+    } catch (error) {
+      window.fbq = function () {};
+    }
   }
 };
 
@@ -137,7 +157,6 @@ const clearAnalyticsCookies = () => {
         send_page_view: false,
       });
     }
-    console.log("Cookies de analytics limpiadas");
   }
 };
 
@@ -147,6 +166,5 @@ const clearMarketingCookies = () => {
     if (window.fbq) {
       window.fbq("consent", "revoke");
     }
-    console.log("Cookies de marketing limpiadas");
   }
 };

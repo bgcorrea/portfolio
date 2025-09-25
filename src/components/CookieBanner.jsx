@@ -1,29 +1,24 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useCookies } from "../hooks/useCookies";
 
 const CookieBanner = () => {
   const [showBanner, setShowBanner] = useState(false);
   const [showPreferences, setShowPreferences] = useState(false);
-  const [preferences, setPreferences] = useState({
-    essential: true, // Siempre activo
+  const [localPreferences, setLocalPreferences] = useState({
+    essential: true,
     analytics: false,
     functional: false,
     marketing: false,
   });
+  const { preferences, hasConsent, updatePreferences } = useCookies();
 
   useEffect(() => {
-    // Verificar si ya se ha dado consentimiento
-    const consent = localStorage.getItem("cookieConsent");
-    if (!consent) {
+    // Solo mostrar banner si no hay consentimiento previo
+    if (!hasConsent) {
       setShowBanner(true);
-    } else {
-      // Cargar preferencias guardadas
-      const savedPreferences = localStorage.getItem("cookiePreferences");
-      if (savedPreferences) {
-        setPreferences(JSON.parse(savedPreferences));
-      }
     }
-  }, []);
+  }, [hasConsent]);
 
   const handleAcceptAll = () => {
     const allAccepted = {
@@ -32,8 +27,7 @@ const CookieBanner = () => {
       functional: true,
       marketing: true,
     };
-    setPreferences(allAccepted);
-    savePreferences(allAccepted);
+    updatePreferences(allAccepted);
     setShowBanner(false);
   };
 
@@ -44,35 +38,19 @@ const CookieBanner = () => {
       functional: false,
       marketing: false,
     };
-    setPreferences(onlyEssential);
-    savePreferences(onlyEssential);
+    updatePreferences(onlyEssential);
     setShowBanner(false);
   };
 
   const handleSavePreferences = () => {
-    savePreferences(preferences);
+    updatePreferences(localPreferences);
     setShowBanner(false);
     setShowPreferences(false);
   };
 
-  const savePreferences = (prefs) => {
-    localStorage.setItem("cookieConsent", "true");
-    localStorage.setItem("cookiePreferences", JSON.stringify(prefs));
-
-    // Aquí puedes agregar lógica para cargar/desactivar scripts según las preferencias
-    if (prefs.analytics) {
-      // Cargar Google Analytics
-      console.log("Google Analytics habilitado");
-    }
-    if (prefs.marketing) {
-      // Cargar Meta Pixel
-      console.log("Meta Pixel habilitado");
-    }
-  };
-
   const handlePreferenceChange = (type) => {
     if (type === "essential") return; // No se puede desactivar
-    setPreferences((prev) => ({
+    setLocalPreferences((prev) => ({
       ...prev,
       [type]: !prev[type],
     }));
@@ -173,7 +151,7 @@ const CookieBanner = () => {
                   <button
                     onClick={() => handlePreferenceChange("analytics")}
                     className={`w-12 h-6 rounded-full flex items-center transition-colors ${
-                      preferences.analytics
+                      localPreferences.analytics
                         ? "bg-indigo-600 justify-end pr-1"
                         : "bg-gray-300 justify-start pl-1"
                     }`}
@@ -195,7 +173,7 @@ const CookieBanner = () => {
                   <button
                     onClick={() => handlePreferenceChange("functional")}
                     className={`w-12 h-6 rounded-full flex items-center transition-colors ${
-                      preferences.functional
+                      localPreferences.functional
                         ? "bg-indigo-600 justify-end pr-1"
                         : "bg-gray-300 justify-start pl-1"
                     }`}
@@ -217,7 +195,7 @@ const CookieBanner = () => {
                   <button
                     onClick={() => handlePreferenceChange("marketing")}
                     className={`w-12 h-6 rounded-full flex items-center transition-colors ${
-                      preferences.marketing
+                      localPreferences.marketing
                         ? "bg-indigo-600 justify-end pr-1"
                         : "bg-gray-300 justify-start pl-1"
                     }`}

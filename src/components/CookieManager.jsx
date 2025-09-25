@@ -7,20 +7,27 @@ const CookieManager = () => {
   useEffect(() => {
     if (!hasConsent) return;
 
-    // Cargar Google Analytics si está habilitado
-    if (preferences.analytics) {
-      loadGoogleAnalytics();
-    }
+    // Cargar scripts de forma asíncrona para no bloquear el render
+    const loadScripts = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 200));
 
-    // Cargar Meta Pixel si está habilitado
-    if (preferences.marketing) {
-      loadMetaPixel();
-    }
+      // Cargar Google Analytics si está habilitado
+      if (preferences.analytics) {
+        loadGoogleAnalytics();
+      }
 
-    // Cargar cookies funcionales si está habilitado
-    if (preferences.functional) {
-      loadFunctionalCookies();
-    }
+      // Cargar Meta Pixel si está habilitado
+      if (preferences.marketing) {
+        loadMetaPixel();
+      }
+
+      // Cargar cookies funcionales si está habilitado
+      if (preferences.functional) {
+        loadFunctionalCookies();
+      }
+    };
+
+    loadScripts();
   }, [preferences, hasConsent]);
 
   return null; // Este componente no renderiza nada
@@ -47,13 +54,19 @@ const loadGoogleAnalytics = () => {
       anonymize_ip: true,
       cookie_flags: "SameSite=None;Secure",
     });
-
-    console.log("Google Analytics cargado");
   }
 };
 
 // Función para cargar Meta Pixel
 const loadMetaPixel = () => {
+  // Solo cargar Meta Pixel si hay un ID válido configurado
+  const pixelId = "META_PIXEL_ID";
+  if (!pixelId || pixelId === "META_PIXEL_ID") {
+    // No hay ID válido, crear función mock
+    window.fbq = function () {};
+    return;
+  }
+
   if (typeof window !== "undefined" && !window.fbq) {
     // Script de Meta Pixel
     const loadPixel = function (f, b, e, v, n, t, s) {
@@ -71,22 +84,27 @@ const loadMetaPixel = () => {
       t = b.createElement(e);
       t.async = !0;
       t.src = v;
+      t.onerror = function () {
+        window.fbq = function () {};
+      };
       s = b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t, s);
     };
 
-    loadPixel(
-      window,
-      document,
-      "script",
-      "https://connect.facebook.net/en_US/fbevents.js"
-    );
+    try {
+      loadPixel(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js"
+      );
 
-    // Inicializar Meta Pixel
-    window.fbq("init", "META_PIXEL_ID");
-    window.fbq("track", "PageView");
-
-    console.log("Meta Pixel cargado");
+      // Inicializar con el ID válido
+      window.fbq("init", pixelId);
+      window.fbq("track", "PageView");
+    } catch (error) {
+      window.fbq = function () {};
+    }
   }
 };
 
@@ -94,7 +112,6 @@ const loadMetaPixel = () => {
 const loadFunctionalCookies = () => {
   // Aquí puedes agregar lógica para cookies funcionales
   // Por ejemplo, recordar preferencias del usuario
-  console.log("Cookies funcionales cargadas");
 
   // Ejemplo: cargar preferencias de tema
   const savedTheme = localStorage.getItem("darkMode");
@@ -117,8 +134,6 @@ export const clearAnalyticsCookies = () => {
     if (window.fbq) {
       window.fbq("consent", "revoke");
     }
-
-    console.log("Cookies de analytics limpiadas");
   }
 };
 
@@ -128,8 +143,6 @@ export const clearMarketingCookies = () => {
     if (window.fbq) {
       window.fbq("consent", "revoke");
     }
-
-    console.log("Cookies de marketing limpiadas");
   }
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,15 +6,16 @@ import {
   useLocation,
 } from "react-router-dom";
 import Home from "./pages/Home";
-import Automatizaciones from "./pages/Automatizaciones";
-import Privacidad from "./pages/Privacidad";
-import Cookies from "./pages/Cookies";
-import Redes from "./pages/Redes";
-import AnalyticsDashboard from "./pages/AnalyticsDashboard";
 import Navbar from "./components/Navbar";
 import CookieBanner from "./components/CookieBanner";
 import CookieManager from "./components/CookieManager";
-import CookieConsent from "./components/CookieConsent";
+
+// Lazy loading para páginas pesadas
+const Automatizaciones = lazy(() => import("./pages/Automatizaciones"));
+const Privacidad = lazy(() => import("./pages/Privacidad"));
+const Cookies = lazy(() => import("./pages/Cookies"));
+const Redes = lazy(() => import("./pages/Redes"));
+const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 
 // Componente interno para manejar el navbar condicional
 const AppContent = ({ darkMode }) => {
@@ -27,14 +28,25 @@ const AppContent = ({ darkMode }) => {
       <main
         className={isDashboard ? "min-h-screen" : "min-h-[calc(100vh-4rem)]"}
       >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/automatizaciones" element={<Automatizaciones />} />
-          <Route path="/privacidad" element={<Privacidad />} />
-          <Route path="/cookies" element={<Cookies />} />
-          <Route path="/redes" element={<Redes />} />
-          <Route path="/analytics-dashboard" element={<AnalyticsDashboard />} />
-        </Routes>
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center min-h-[50vh]">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+            </div>
+          }
+        >
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/automatizaciones" element={<Automatizaciones />} />
+            <Route path="/privacidad" element={<Privacidad />} />
+            <Route path="/cookies" element={<Cookies />} />
+            <Route path="/redes" element={<Redes />} />
+            <Route
+              path="/analytics-dashboard"
+              element={<AnalyticsDashboard />}
+            />
+          </Routes>
+        </Suspense>
       </main>
 
       {/* Cookie Banner */}
@@ -42,9 +54,6 @@ const AppContent = ({ darkMode }) => {
 
       {/* Cookie Manager */}
       <CookieManager />
-
-      {/* Cookie Consent Global */}
-      <CookieConsent />
     </div>
   );
 };
@@ -57,16 +66,11 @@ const App = () => {
   });
 
   useEffect(() => {
-    // Guardar el estado en localStorage
-    localStorage.setItem("darkMode", JSON.stringify(darkMode));
-
-    // Aplicar la clase dark al elemento html
+    // Aplicar la clase dark al elemento html solo una vez
     if (darkMode) {
       document.documentElement.classList.add("dark");
-      console.log("Modo oscuro activado");
     } else {
       document.documentElement.classList.remove("dark");
-      console.log("Modo claro activado");
     }
   }, [darkMode]);
 

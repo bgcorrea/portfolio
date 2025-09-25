@@ -1,15 +1,12 @@
 {
-  "name": "Portfolio de Benjamin Correa",
-  "short_name": "Portfolio",
-  "icons": [
-    {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
-    }
-  ],
-  "theme_color": "#B45309",
-  "background_color": "#ffffff",
+  "name": "Benjamín Correa",
+  "short_name": "B. Correa",
+  "start_url": "/",
   "display": "standalone",
-  "start_url": "/"
+  "background_color": "#F5F7FE",
+  "theme_color": "#7B7AE6",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
 }

@@ -394,7 +394,10 @@ const Automatizaciones = () => {
         {/* Gradiente de fondo para toda la sección */}
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-indigo-100"></div>
 
-        <ScrollAnimatedSection className="relative mx-auto max-w-6xl" delay={200}>
+        <ScrollAnimatedSection
+          className="relative mx-auto max-w-6xl"
+          delay={200}
+        >
           <motion.div
             className="text-center mb-12"
             initial="hidden"

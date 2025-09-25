@@ -4,7 +4,6 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   es: {
     translation: {
-      // añade claves mínimas para evitar fallos
       "common.loading": "Cargando...",
     },
   },

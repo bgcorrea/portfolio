@@ -11,9 +11,9 @@ const CookieManager = () => {
     const loadScripts = async () => {
       await new Promise((resolve) => setTimeout(resolve, 200));
 
-      // Cargar Google Analytics si está habilitado
+      // Cargar analytics si está habilitado
       if (preferences.analytics) {
-        loadGoogleAnalytics();
+        loadAnalytics();
       }
 
       // Cargar Meta Pixel si está habilitado
@@ -33,28 +33,11 @@ const CookieManager = () => {
   return null; // Este componente no renderiza nada
 };
 
-// Función para cargar Google Analytics
-const loadGoogleAnalytics = () => {
-  if (typeof window !== "undefined" && !window.gtag) {
-    // Crear script de Google Analytics
-    const script = document.createElement("script");
-    script.async = true;
-    script.src =
-      "https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID";
-    document.head.appendChild(script);
-
-    // Inicializar gtag
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      window.dataLayer.push(arguments);
-    }
-    window.gtag = gtag;
-    gtag("js", new Date());
-    gtag("config", "GA_MEASUREMENT_ID", {
-      anonymize_ip: true,
-      cookie_flags: "SameSite=None;Secure",
-    });
-  }
+// Función para cargar analytics
+const loadAnalytics = () => {
+  // Aquí puedes agregar tu sistema de analytics preferido
+  // Por ejemplo, Google Analytics, Plausible, etc.
+  console.log("Analytics habilitado - configura tu sistema de analytics aquí");
 };
 
 // Función para cargar Meta Pixel
@@ -123,12 +106,8 @@ const loadFunctionalCookies = () => {
 // Función para limpiar cookies cuando se desactivan
 export const clearAnalyticsCookies = () => {
   if (typeof window !== "undefined") {
-    // Limpiar Google Analytics
-    if (window.gtag) {
-      window.gtag("config", "GA_MEASUREMENT_ID", {
-        send_page_view: false,
-      });
-    }
+    // Limpiar analytics
+    console.log("Analytics cookies limpiadas");
 
     // Limpiar Meta Pixel
     if (window.fbq) {

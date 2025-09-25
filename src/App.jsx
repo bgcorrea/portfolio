@@ -16,19 +16,13 @@ const Automatizaciones = lazy(() => import("./pages/Automatizaciones"));
 const Privacidad = lazy(() => import("./pages/Privacidad"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const Redes = lazy(() => import("./pages/Redes"));
-const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 
 // Componente interno para manejar el navbar condicional
 const AppContent = ({ darkMode }) => {
-  const location = useLocation();
-  const isDashboard = location.pathname === "/analytics-dashboard";
-
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-500">
-      {!isDashboard && <Navbar />}
-      <main
-        className={isDashboard ? "min-h-screen" : "min-h-[calc(100vh-4rem)]"}
-      >
+      <Navbar />
+      <main className="min-h-[calc(100vh-4rem)]">
         <Suspense
           fallback={
             <div className="flex items-center justify-center min-h-[50vh]">
@@ -42,10 +36,6 @@ const AppContent = ({ darkMode }) => {
             <Route path="/privacidad" element={<Privacidad />} />
             <Route path="/cookies" element={<Cookies />} />
             <Route path="/redes" element={<Redes />} />
-            <Route
-              path="/analytics-dashboard"
-              element={<AnalyticsDashboard />}
-            />
           </Routes>
         </Suspense>
       </main>

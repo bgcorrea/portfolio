@@ -97,7 +97,7 @@ const CookiePreferences = () => {
                         Cookies Analíticas
                       </h3>
                       <p className="text-sm text-gray-600 mt-1">
-                        Google Analytics, análisis de uso (2 años)
+                        Análisis de uso y comportamiento (2 años)
                       </p>
                     </div>
                     <button

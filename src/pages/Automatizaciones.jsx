@@ -15,23 +15,27 @@ function useCalEmbed() {
 
     console.warn = function (...args) {
       const message = args.join(" ");
-      // Filtrar warnings específicos de Cal.com
+      // Filtrar warnings específicos de Cal.com solo en producción
       if (
-        message.includes("markdownToSafeHTML") ||
-        message.includes("createWithEqualityFn") ||
-        message.includes("react-i18next") ||
-        message.includes("QuickAvailabilityCheck")
+        process.env.NODE_ENV === "production" &&
+        (message.includes("markdownToSafeHTML") ||
+          message.includes("createWithEqualityFn") ||
+          message.includes("react-i18next") ||
+          message.includes("QuickAvailabilityCheck"))
       ) {
-        return; // No mostrar estos warnings
+        return; // No mostrar estos warnings en producción
       }
       originalWarn.apply(console, args);
     };
 
     console.log = function (...args) {
       const message = args.join(" ");
-      // Filtrar logs específicos de Cal.com
-      if (message.includes("QuickAvailabilityCheck feature enabled")) {
-        return; // No mostrar estos logs
+      // Filtrar logs específicos de Cal.com solo en producción
+      if (
+        process.env.NODE_ENV === "production" &&
+        message.includes("QuickAvailabilityCheck feature enabled")
+      ) {
+        return; // No mostrar estos logs en producción
       }
       originalLog.apply(console, args);
     };

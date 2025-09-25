@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Hook para animaciones de scroll desde la derecha
@@ -26,17 +26,18 @@ export const useScrollAnimation = (threshold = 0.1, delay = 0) => {
       },
       {
         threshold,
-        rootMargin: '0px 0px -50px 0px', // Activar un poco antes de que sea completamente visible
+        rootMargin: "0px 0px -50px 0px", // Activar un poco antes de que sea completamente visible
       }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    const currentRef = ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [threshold, delay]);
@@ -51,8 +52,14 @@ export const useScrollAnimation = (threshold = 0.1, delay = 0) => {
  * @param {number} threshold - Porcentaje de visibilidad
  * @returns {Array} - Array de objetos { ref, isVisible } para cada elemento
  */
-export const useStaggeredScrollAnimation = (itemCount, staggerDelay = 100, threshold = 0.1) => {
-  const [visibleItems, setVisibleItems] = useState(new Array(itemCount).fill(false));
+export const useStaggeredScrollAnimation = (
+  itemCount,
+  staggerDelay = 100,
+  threshold = 0.1
+) => {
+  const [visibleItems, setVisibleItems] = useState(
+    new Array(itemCount).fill(false)
+  );
   const refs = useRef([]);
 
   useEffect(() => {
@@ -64,7 +71,7 @@ export const useStaggeredScrollAnimation = (itemCount, staggerDelay = 100, thres
           if (entry.isIntersecting) {
             // Aplicar delay escalonado
             setTimeout(() => {
-              setVisibleItems(prev => {
+              setVisibleItems((prev) => {
                 const newVisible = [...prev];
                 newVisible[index] = true;
                 return newVisible;
@@ -74,7 +81,7 @@ export const useStaggeredScrollAnimation = (itemCount, staggerDelay = 100, thres
         },
         {
           threshold,
-          rootMargin: '0px 0px -50px 0px',
+          rootMargin: "0px 0px -50px 0px",
         }
       );
 
@@ -83,7 +90,7 @@ export const useStaggeredScrollAnimation = (itemCount, staggerDelay = 100, thres
     });
 
     return () => {
-      observers.forEach(observer => {
+      observers.forEach((observer) => {
         if (observer) observer.disconnect();
       });
     };

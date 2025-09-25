@@ -11,7 +11,7 @@ const CookieBanner = () => {
     functional: false,
     marketing: false,
   });
-  const { preferences, hasConsent, updatePreferences } = useCookies();
+  const { hasConsent, updatePreferences } = useCookies();
 
   useEffect(() => {
     // Solo mostrar banner si no hay consentimiento previo
@@ -75,9 +75,9 @@ const CookieBanner = () => {
                   🍪 Uso de Cookies
                 </h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Utilizamos cookies para mejorar tu experiencia, analizar el
-                  tráfico y personalizar contenido. Puedes gestionar tus
-                  preferencias en cualquier momento.
+                  Utilizamos cookies para mejorar tu experiencia y personalizar
+                  contenido. Puedes gestionar tus preferencias en cualquier
+                  momento.
                 </p>
               </div>
 
@@ -145,7 +145,7 @@ const CookieBanner = () => {
                       Cookies Analíticas
                     </h4>
                     <p className="text-sm text-gray-600 mt-1">
-                      Google Analytics, análisis de uso (2 años)
+                      Análisis de uso y comportamiento (2 años)
                     </p>
                   </div>
                   <button

@@ -13,11 +13,14 @@ import { Helmet } from "react-helmet-async";
 import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
 import ScrollAnimatedSection from "../components/ScrollAnimatedSection";
+import LeadMagnetPopup from "../components/LeadMagnetPopup";
+import TikTokVideos from "../components/TikTokVideos";
 
 const Home = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [showContent, setShowContent] = useState(false);
+  const [showPopup, setShowPopup] = useState(true);
 
   // Mostrar loading por exactamente 1 segundo
   useEffect(() => {
@@ -500,10 +503,63 @@ const Home = () => {
             </ScrollAnimatedSection>
           </section>
 
+          {/* TikTok Content Section */}
+          <section className="py-16 px-4 bg-gray-50">
+            <ScrollAnimatedSection className="max-w-6xl mx-auto" delay={800}>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Último Contenido en TikTok
+                </h2>
+                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                  Tips de automatización, desarrollo y tecnología que comparto
+                  regularmente en TikTok.
+                </p>
+              </div>
+
+              <TikTokVideos />
+
+              {/* Follow CTA */}
+              <div className="text-center mt-8">
+                <p className="text-gray-600 mb-4">
+                  ¿Te gusta el contenido? ¡Sígueme para más tips!
+                </p>
+                <div className="flex justify-center space-x-4">
+                  <a
+                    href="https://www.tiktok.com/@bgcorrea"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    <FaTiktok size={24} />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/soybenjacorrea"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    <FaInstagram size={24} />
+                  </a>
+                  <a
+                    href="https://www.youtube.com/@bgcorrea"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    <FaYoutube size={24} />
+                  </a>
+                </div>
+              </div>
+            </ScrollAnimatedSection>
+          </section>
+
           {/* Footer */}
           <Footer />
         </div>
       )}
+
+      {/* Lead Magnet Popup */}
+      {showPopup && <LeadMagnetPopup onClose={() => setShowPopup(false)} />}
     </div>
   );
 };

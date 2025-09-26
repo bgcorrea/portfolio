@@ -365,7 +365,7 @@ const Automatizaciones = () => {
               className="inline-flex items-center justify-center rounded-xl border border-gray-200 px-5 py-3 font-medium hover:bg-gray-50 transition-colors"
               onClick={(e) => {
                 e.preventDefault();
-                trackEvent("lp_auto_checklist", "Hero Secondary");
+                trackEvent("lp_auto_guia", "Hero Secondary");
                 document
                   .getElementById("lead-magnet")
                   ?.scrollIntoView({ behavior: "smooth" });
@@ -374,7 +374,7 @@ const Automatizaciones = () => {
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              Descargar checklist
+              Descargar guía
             </motion.a>
           </motion.div>
 
@@ -452,9 +452,9 @@ const Automatizaciones = () => {
               className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto"
               variants={staggerItem}
             >
-              Descarga gratis mi checklist completo para identificar en 5
-              minutos dónde estás perdiendo tiempo y dinero. Incluye ejemplos
-              reales y una plantilla para priorizar.
+              Descarga gratis mi guía completa para identificar en 5 minutos
+              dónde estás perdiendo tiempo y dinero. Incluye ejemplos reales y
+              una plantilla para priorizar.
             </motion.p>
           </motion.div>
 
@@ -614,7 +614,7 @@ const Automatizaciones = () => {
                     ✓
                   </motion.span>
                   <span>
-                    Checklist accionable (ventas/leads, soporte, reportes,
+                    Guía accionable (ventas/leads, soporte, reportes,
                     facturación, admin)
                   </span>
                 </motion.li>

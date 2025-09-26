@@ -111,6 +111,12 @@ const Footer = () => {
                 Privacidad
               </Link>
               <Link
+                to="/terminos"
+                className="block text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 transition-colors"
+              >
+                Términos
+              </Link>
+              <Link
                 to="/cookies"
                 className="block text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 transition-colors"
               >
@@ -153,6 +159,12 @@ const Footer = () => {
                 className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors underline"
               >
                 Política de Privacidad
+              </Link>
+              <Link
+                to="/terminos"
+                className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors underline"
+              >
+                Términos de Servicio
               </Link>
               <CookiePreferences />
             </div>

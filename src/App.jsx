@@ -1,10 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
@@ -16,6 +11,8 @@ const Automatizaciones = lazy(() => import("./pages/Automatizaciones"));
 const Privacidad = lazy(() => import("./pages/Privacidad"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const Redes = lazy(() => import("./pages/Redes"));
+const TikTokDemo = lazy(() => import("./pages/TikTokDemo"));
+const Terminos = lazy(() => import("./pages/Terminos"));
 
 // Componente interno para manejar el navbar condicional
 const AppContent = ({ darkMode }) => {
@@ -36,6 +33,8 @@ const AppContent = ({ darkMode }) => {
             <Route path="/privacidad" element={<Privacidad />} />
             <Route path="/cookies" element={<Cookies />} />
             <Route path="/redes" element={<Redes />} />
+            <Route path="/tiktok-demo" element={<TikTokDemo />} />
+            <Route path="/terminos" element={<Terminos />} />
           </Routes>
         </Suspense>
       </main>

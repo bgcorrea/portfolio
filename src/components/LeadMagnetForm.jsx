@@ -51,8 +51,7 @@ export default function LeadMagnetForm() {
           ¡Listo! Revisa tu correo 📩
         </h3>
         <p style={{ color: "#374151" }}>
-          Te envié el checklist a <b>{email}</b>. También puedes descargarlo
-          aquí:
+          Te envié la guía a <b>{email}</b>. También puedes descargarla aquí:
         </p>
         {downloadUrl && (
           <a
@@ -70,7 +69,7 @@ export default function LeadMagnetForm() {
               borderRadius: 10,
             }}
           >
-            Descargar checklist (PDF)
+            Descargar guía (PDF)
           </a>
         )}
         <div style={{ height: 12 }} />
@@ -168,7 +167,7 @@ export default function LeadMagnetForm() {
       {error && <p style={{ color: "#b91c1c", margin: 0 }}>{error}</p>}
 
       <small style={{ color: "#6B7280" }}>
-        Descarga gratis mi checklist para identificar en 5 minutos dónde estás
+        Descarga gratis mi guía para identificar en 5 minutos dónde estás
         perdiendo tiempo y dinero. Incluye ejemplos reales y una plantilla para
         priorizar.
       </small>

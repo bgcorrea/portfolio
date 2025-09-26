@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || "dummy-key-for-development");
 const CONTACT_TO = process.env.CONTACT_TO || "contacto@benjamincorrea.com";
 const CONTACT_FROM = process.env.CONTACT_FROM || "contacto@benjamincorrea.com";
 

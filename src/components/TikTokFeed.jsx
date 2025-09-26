@@ -8,12 +8,9 @@ export default function TikTokFeed() {
   useEffect(() => {
     (async () => {
       try {
-        const backendUrl =
-          process.env.NODE_ENV === "production"
-            ? "https://portfolio-production-acab.up.railway.app"
-            : "http://localhost:5000";
-        const r = await fetch(`${backendUrl}/api/tiktok/videos`, {
-          credentials: "include", // Para incluir cookies
+        const r = await fetch("https://portfolio-production-acab.up.railway.app/api/tiktok/videos", {
+          method: "GET",
+          credentials: "include",
         });
         const j = await r.json();
         if (r.ok) setVideos(j.videos || []);

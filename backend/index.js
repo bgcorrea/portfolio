@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import rateLimit from "express-rate-limit";
 import { google } from "googleapis";
@@ -18,19 +19,40 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Trust proxy para Railway
+app.set("trust proxy", 1);
+
+// CORS configuration
+const ALLOWED_ORIGINS = ["https://www.benjamincorrea.com"];
+
 // Middleware
+app.use(cookieParser());
+app.use(bodyParser.json());
+
+// CORS: habilitar credenciales y origin exacto
 app.use(
   cors({
-    origin: [
-      "https://benjamincorrea.com",
-      "https://www.benjamincorrea.com",
-      "http://localhost:5173",
-    ],
-    methods: ["POST", "GET", "OPTIONS"],
+    origin: (origin, cb) => {
+      // Permitir llamadas sin Origin (curl/postman) y desde el dominio permitido
+      if (!origin || ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
+      return cb(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+    methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-app.use(bodyParser.json());
+
+// Responder preflight explícitamente
+app.options(
+  "*",
+  cors({
+    origin: ALLOWED_ORIGINS,
+    credentials: true,
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 // Rate limiting para lead magnet
 app.use(
@@ -315,22 +337,26 @@ app.get("/api/tiktok/callback", async (req, res) => {
     res.cookie("tk_open_id", data.open_id, {
       httpOnly: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
+      path: "/",
     });
     res.cookie("tk_access_token", data.access_token, {
       httpOnly: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
+      path: "/",
     });
     res.cookie("tk_refresh_token", data.refresh_token, {
       httpOnly: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
+      path: "/",
     });
     res.cookie("tk_exp", String(Date.now() + data.expires_in * 1000), {
       httpOnly: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
+      path: "/",
     });
 
     res.redirect(`${base}/tiktok-demo?connected=1`);

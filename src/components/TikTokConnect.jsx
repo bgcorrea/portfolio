@@ -3,10 +3,7 @@ import React from "react";
 export default function TikTokConnect() {
   const connect = () => {
     // Redirigir al endpoint del backend Express
-    const backendUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://portfolio-production-acab.up.railway.app"
-        : "http://localhost:5000";
+    const backendUrl = "https://portfolio-production-acab.up.railway.app";
     window.location.href = `${backendUrl}/api/tiktok/auth`;
   };
 

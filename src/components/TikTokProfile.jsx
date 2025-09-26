@@ -8,12 +8,9 @@ export default function TikTokProfile() {
   useEffect(() => {
     (async () => {
       try {
-        const backendUrl =
-          process.env.NODE_ENV === "production"
-            ? "https://portfolio-production-acab.up.railway.app"
-            : "http://localhost:5000";
-        const r = await fetch(`${backendUrl}/api/tiktok/profile`, {
-          credentials: "include", // Para incluir cookies
+        const r = await fetch("https://portfolio-production-acab.up.railway.app/api/tiktok/profile", {
+          method: "GET",
+          credentials: "include",
         });
         const j = await r.json();
         if (r.ok) setUser(j.user);

@@ -2,8 +2,8 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import bodyParser from "body-parser";
 import rateLimit from "express-rate-limit";
+import fetch from "node-fetch";
 import { google } from "googleapis";
 import {
   sendClientAutoReply,
@@ -17,7 +17,7 @@ import {
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
 // Trust proxy para Railway
 app.set("trust proxy", 1);
@@ -27,7 +27,8 @@ const ALLOWED_ORIGINS = ["https://www.benjamincorrea.com"];
 
 // Middleware
 app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // CORS: habilitar credenciales y origin exacto
 app.use(

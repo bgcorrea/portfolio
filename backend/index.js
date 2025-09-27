@@ -22,38 +22,28 @@ const PORT = process.env.PORT || 3001;
 // Trust proxy para Railway
 app.set("trust proxy", 1);
 
-// CORS configuration
 const ALLOWED_ORIGINS = ["https://www.benjamincorrea.com"];
 
-// Middleware
+const corsOptions = {
+  origin: (origin, cb) => {
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
+    return cb(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  optionsSuccessStatus: 204, // por si algún proxy/navegador es quisquilloso
+};
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS: habilitar credenciales y origin exacto
-app.use(
-  cors({
-    origin: (origin, cb) => {
-      // Permitir llamadas sin Origin (curl/postman) y desde el dominio permitido
-      if (!origin || ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
-      return cb(new Error("Not allowed by CORS"));
-    },
-    credentials: true,
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+// CORS general (GET/POST)
+app.use(cors(corsOptions));
 
-// Responder preflight explícitamente
-app.options(
-  "*",
-  cors({
-    origin: ALLOWED_ORIGINS,
-    credentials: true,
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+// Preflight SOLO para rutas de API
+app.options("/api/*", cors(corsOptions));
 
 // Rate limiting para lead magnet
 app.use(

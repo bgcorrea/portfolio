@@ -39,11 +39,12 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS general (GET/POST)
+// 1) Aplica CORS a todas las rutas (incluye /api/...)
 app.use(cors(corsOptions));
 
-// Preflight SOLO para rutas de API
-app.options("/api/*", cors(corsOptions));
+// 2) Manejo de preflight SIN comodines inválidos
+//    Usa un patrón válido en Express 5: "(.*)" para cualquier ruta
+app.options("(.*)", cors(corsOptions));
 
 // Rate limiting para lead magnet
 app.use(

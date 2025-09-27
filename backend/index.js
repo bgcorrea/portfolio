@@ -43,8 +43,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 
 // 2) Manejo de preflight SIN comodines inválidos
-//    Usa un patrón válido en Express 5: "(.*)" para cualquier ruta
-app.options("(.*)", cors(corsOptions));
+//    Usa un patrón válido en Express 5: /.*/ para cualquier ruta
+app.options(/.*/, cors(corsOptions));
 
 // Rate limiting para lead magnet
 app.use(

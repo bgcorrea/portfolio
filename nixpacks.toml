@@ -2,10 +2,10 @@
 nixPkgs = ["nodejs_20", "pnpm-9_x"]
 
 [phases.install]
-cmds = ["cd backend && pnpm install --frozen-lockfile"]
+cmds = ["pnpm install --frozen-lockfile"]
 
 [phases.start]
-cmd = "cd backend && pnpm run start"
+cmd = "pnpm run start"
 
 [variables]
 NODE_ENV = "production"

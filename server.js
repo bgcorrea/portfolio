@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 import fetch from "node-fetch";
 import { google } from "googleapis";
+import path from "path";
+import { fileURLToPath } from "url";
 import {
   sendClientAutoReply,
   sendInternalNotification,
@@ -17,7 +19,11 @@ import {
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
+
+// Para manejar __dirname en ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Trust proxy para Railway
 app.set("trust proxy", 1);
@@ -413,6 +419,14 @@ app.get("/api/tiktok/videos", async (req, res) => {
     console.error("TikTok videos error:", error);
     res.status(400).json({ error: error.message });
   }
+});
+
+// Servir archivos estáticos desde el build de React
+app.use(express.static(path.join(__dirname, "build")));
+
+// Catch-all handler: enviar React app para cualquier ruta no-API
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 app.listen(PORT, () => {

@@ -1,83 +1,100 @@
-# Portfolio - Benjamin Correa
+# Portfolio - Benjamín Correa
 
-Portfolio personal desarrollado con React y Tailwind CSS, con sistema de envío automático de correos.
+## Integración TikTok
 
-## Características
+### Configuración Backend (Railway)
 
-- **Frontend**: React con Tailwind CSS
-- **Backend**: Node.js con Express
-- **Sistema de correos**: Envío automático usando Gmail API
-- **Responsive**: Diseño adaptativo para todos los dispositivos
-- **Modo oscuro**: Soporte para tema claro y oscuro
+El backend Express corre en Railway con las siguientes configuraciones:
 
-## Sistema de Envío de Correos
+- **CORS**: Configurado para `https://www.benjamincorrea.com`
+- **Cookies**: Cross-site con `sameSite: "none"` y `secure: true`
+- **Proxy Trust**: Configurado para Railway
 
-Cuando alguien completa el formulario de contacto:
+### Variables de Entorno (Railway)
 
-1. **Correo al propietario**: Se envía automáticamente a `contacto@benjamincorrea.com` con los detalles del mensaje
-2. **Correo de confirmación**: Se envía automáticamente al remitente confirmando que se recibió su mensaje
-
-### Configuración del Backend
-
-Sigue las instrucciones detalladas en [backend/README.md](backend/README.md) para configurar el envío de correos.
-
-## Instalación y Uso
-
-### Frontend
-
-```bash
-# Instalar dependencias
-npm install
-
-# Ejecutar en desarrollo
-npm start
-
-# Construir para producción
-npm run build
+```env
+TIKTOK_CLIENT_KEY=awjrv5cvmzlo4dd3
+TIKTOK_CLIENT_SECRET=1Mk3DxIJZoZBGNrXRbN9pYESVDgwRwLk
+TIKTOK_REDIRECT_URI=https://www.benjamincorrea.com/api/tiktok/callback
+TIKTOK_SCOPES=user.info.basic,video.list
+NODE_ENV=production
 ```
 
-### Backend
+### Pruebas CORS
 
+#### Verificar Preflight OPTIONS
 ```bash
-# Navegar al directorio del backend
-cd backend
-
-# Instalar dependencias
-npm install
-
-# Configurar variables de entorno (ver backend/README.md)
-# Crear archivo .env con las credenciales de Gmail
-
-# Ejecutar en desarrollo
-npm run dev
-
-# Ejecutar en producción
-npm start
+curl -i -X OPTIONS \
+  -H "Origin: https://www.benjamincorrea.com" \
+  -H "Access-Control-Request-Method: POST" \
+  -H "Access-Control-Request-Headers: content-type" \
+  https://portfolio-production-acab.up.railway.app/api/tiktok/videos
 ```
 
-## Estructura del Proyecto
+**Esperado:**
+```
+Access-Control-Allow-Origin: https://www.benjamincorrea.com
+Access-Control-Allow-Credentials: true
+```
+
+#### Test GET con Credenciales
+```bash
+curl -i \
+  -H "Origin: https://www.benjamincorrea.com" \
+  https://portfolio-production-acab.up.railway.app/api/tiktok/profile
+```
+
+### Frontend (Vercel)
+
+El frontend React corre en Vercel con fetch configurado para credenciales:
+
+```javascript
+// Perfil
+await fetch("https://portfolio-production-acab.up.railway.app/api/tiktok/profile", {
+  method: "GET",
+  credentials: "include"
+});
+
+// Videos
+await fetch("https://portfolio-production-acab.up.railway.app/api/tiktok/videos", {
+  method: "GET",
+  credentials: "include"
+});
+```
+
+### URLs de Prueba
+
+- **Demo TikTok**: https://www.benjamincorrea.com/tiktok-demo
+- **Términos**: https://www.benjamincorrea.com/terminos
+- **Privacidad**: https://www.benjamincorrea.com/privacidad
+
+### Deployment
+
+1. **Backend**: Se despliega automáticamente en Railway al hacer push
+2. **Frontend**: Se despliega automáticamente en Vercel al hacer push
+
+### Estructura del Proyecto
 
 ```
 portfolio/
-├── src/                    # Código fuente del frontend
-│   ├── components/         # Componentes reutilizables
-│   ├── pages/             # Páginas de la aplicación
-│   └── config.js          # Configuración del backend
-├── backend/               # Servidor Node.js
-│   ├── index.js           # Servidor principal
-│   ├── package.json       # Dependencias del backend
-│   └── README.md          # Instrucciones del backend
-└── public/                # Archivos estáticos
+├── backend/           # Express API (Railway)
+│   ├── index.js      # Servidor principal
+│   └── package.json  # Dependencias backend
+├── src/              # React Frontend (Vercel)
+│   ├── components/   # Componentes React
+│   └── pages/        # Páginas React
+└── public/           # Assets estáticos
 ```
 
-## Tecnologías Utilizadas
+### Dependencias Backend
 
-- **Frontend**: React, Tailwind CSS, JavaScript
-- **Backend**: Node.js, Express, Nodemailer, Google APIs
-- **Despliegue**: Vercel (frontend), Render/Railway (backend)
-
-## Contacto
-
-- **Email**: contacto@benjamincorrea.com
-- **Teléfono**: +56 9 7856 6046
-- **Ubicación**: Santiago, Chile
+```json
+{
+  "dependencies": {
+    "express": "^5.1.0",
+    "cors": "^2.8.5",
+    "cookie-parser": "^1.4.6",
+    "node-fetch": "^3.3.2"
+  }
+}
+```

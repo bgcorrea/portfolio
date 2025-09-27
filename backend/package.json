@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "engines": { "node": ">=18" },
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
@@ -14,16 +15,17 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^2.2.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^5.1.0",
     "express-rate-limit": "^8.1.0",
     "google-auth-library": "^10.1.0",
     "googleapis": "^150.0.1",
+    "node-fetch": "^3.3.2",
     "resend": "^6.1.0"
   },
   "devDependencies": {
-    "node-fetch": "^2.7.0",
     "nodemon": "^3.0.2"
   }
 }

@@ -19,6 +19,7 @@ import SEO from "../components/SEO";
 import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
 import ScrollAnimatedSection from "../components/ScrollAnimatedSection";
+import OptimizedImage from "../components/OptimizedImage";
 
 const Home = () => {
   const socialLinks = {
@@ -74,15 +75,15 @@ const Home = () => {
   ];
 
   // SEO y JSON-LD
-  const canonical = "https://www.benjamincorrea.com/";
+  const canonical = "https://www.benjamincorrea.com/home";
   const title = "Benjamín Correa | Automatizaciones";
   const description =
-    "Especialista en automatizaciones para negocios digitales. Reduzco trabajo manual, errores y costos para que tu equipo gane tiempo real.";
+    "Automatizo procesos empresariales para reducir trabajo manual y costos. Conecto tus sistemas (CRM, correo, bases de datos) con lógica de negocio real. ¡Agenda tu diagnóstico gratuito!";
   const jsonLd = [
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      url: "https://www.benjamincorrea.com/",
+      url: "https://www.benjamincorrea.com/home",
       name: "Benjamín Correa",
       inLanguage: "es",
       publisher: { "@type": "Person", name: "Benjamín Correa" },
@@ -91,7 +92,7 @@ const Home = () => {
       "@context": "https://schema.org",
       "@type": "Person",
       name: "Benjamín Correa",
-      url: "https://www.benjamincorrea.com/",
+      url: "https://www.benjamincorrea.com/home",
       jobTitle: "Especialista en Automatizaciones",
       sameAs: [
         "https://www.linkedin.com/in/benjamincorrea",
@@ -106,7 +107,7 @@ const Home = () => {
           "@type": "ListItem",
           position: 1,
           name: "Inicio",
-          item: "https://www.benjamincorrea.com/",
+          item: "https://www.benjamincorrea.com/home",
         },
       ],
     },
@@ -122,48 +123,14 @@ const Home = () => {
         jsonLd={jsonLd}
       />
 
-      {/* Estilos para animaciones de cadenas */}
-      <style>{`
-        @keyframes scroll-left {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-100%);
-          }
-        }
-
-        @keyframes scroll-right {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(0);
-          }
-        }
-
-        .animate-scroll-left {
-          animation: scroll-left 20s linear infinite;
-        }
-
-        .animate-scroll-right {
-          animation: scroll-right 20s linear infinite;
-        }
-
-        .animate-scroll-left:hover,
-        .animate-scroll-right:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
-
       {/* Main Content */}
       <div>
         {/* Hero Section */}
         <section
           className="
             relative overflow-x-clip
-            pt-[calc(var(--nav-h,64px)+env(safe-area-inset-top))]
-            pb-[calc(16px+env(safe-area-inset-bottom))]
+            pt-[calc(var(--nav-h,64px)+env(safe-area-inset-top)+1rem)]
+            pb-[calc(2rem+env(safe-area-inset-bottom))]
             min-h-[calc(100dvh-var(--nav-h,64px))]
             md:pt-20 md:pb-20 md:min-h-screen md:flex md:items-center
           "
@@ -175,46 +142,74 @@ const Home = () => {
           </div>
 
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-6 overflow-x-clip">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 md:items-center">
-              <div className="col-span-12 md:col-span-7 order-2 md:order-1 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 md:items-center">
+              <div className="col-span-12 md:col-span-7 order-1 md:order-1 w-full">
                 <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-7xl font-bold text-slate-900 leading-tight break-words">
-                  Automatizaciones para negocios digitales
+                  Automatización de procesos digitales para negocios
                 </h1>
-                <p className="mt-4 md:mt-6 text-sm sm:text-base md:text-xl lg:text-2xl text-slate-700 max-w-3xl leading-relaxed break-words">
-                  Implemento automatizaciones end-to-end para reducir tiempos,
-                  eliminar tareas repetitivas y minimizar errores operativos.
-                  Conecto tus sistemas (CRM, correo, bases de datos,
-                  formularios, e-commerce) con lógica de negocio real para que
-                  tu equipo gane tiempo real y tu empresa escale sin contratar
-                  más personal.
-                </p>
+                <div className="mt-4 md:mt-6 space-y-3 md:space-y-4 max-w-3xl">
+                  <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-slate-700 leading-relaxed break-words">
+                    Implemento automatizaciones end-to-end para reducir tiempos,
+                    eliminar tareas repetitivas y minimizar errores operativos.
+                  </p>
+                  <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-slate-700 leading-relaxed break-words">
+                    Conecto tus sistemas (CRM, correo, bases de datos,
+                    formularios, e-commerce) con lógica de negocio real para que
+                    tu equipo gane tiempo real y tu empresa escale sin contratar
+                    más personal.
+                  </p>
+                </div>
                 <div className="mt-8 md:mt-10 flex flex-col gap-6 w-full">
-                  <a
-                    href="/automatizaciones"
-                    className="inline-flex items-center justify-center rounded-xl bg-violet-600 text-white px-8 py-5 font-medium hover:bg-violet-700 transition text-lg w-full sm:w-auto"
-                  >
-                    Ver servicios de automatización
-                  </a>
-                  <div className="flex flex-col sm:flex-row gap-3 w-full">
-                    <a
-                      href="/#contacto"
-                      className="inline-flex items-center justify-center rounded-xl border border-slate-300 px-8 py-5 font-medium hover:bg-slate-50 transition text-lg flex-1 w-full sm:w-auto"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        document.getElementById("contacto")?.scrollIntoView({
-                          behavior: "smooth",
-                          block: "start",
-                        });
-                      }}
-                    >
-                      Contáctame
-                    </a>
+                  {/* CTA Principal */}
+                  <div className="flex flex-col gap-3">
                     <a
                       href="/automatizaciones#diagnostico-gratuito"
-                      className="inline-flex items-center justify-center rounded-xl bg-slate-900 text-white px-8 py-5 font-medium hover:bg-slate-800 transition text-lg flex-1 w-full sm:w-auto"
+                      className="inline-flex items-center justify-center rounded-xl bg-violet-600 text-white px-8 py-5 font-medium hover:bg-violet-700 transition text-lg w-full sm:w-auto"
                     >
-                      Agendar reunión
+                      Agendar diagnóstico gratuito
                     </a>
+                    <p className="text-sm text-slate-600 text-center sm:text-left">
+                      ⚡ Resultados en 30 días garantizados
+                    </p>
+                  </div>
+
+                  {/* CTA Secundario */}
+                  <a
+                    href="/home#contacto"
+                    className="inline-flex items-center justify-center rounded-xl border-2 border-slate-900 text-slate-900 px-8 py-5 font-medium hover:bg-slate-900 hover:text-white transition text-lg w-full sm:w-auto"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById("contacto")?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }}
+                  >
+                    Contáctame
+                  </a>
+                </div>
+
+                {/* Tecnologías de confianza */}
+                <div className="mt-8 md:mt-10">
+                  <p className="text-xs text-slate-500 text-center md:text-left mb-4">
+                    Tecnologías que utilizo
+                  </p>
+                  <div className="flex flex-wrap justify-center md:justify-start gap-4 md:gap-6">
+                    {[
+                      { name: "Zapier", logo: "🔗" },
+                      { name: "AWS", logo: "☁️" },
+                      { name: "n8n", logo: "⚡" },
+                      { name: "Make", logo: "🔧" },
+                      { name: "Python", logo: "🐍" },
+                    ].map((tech, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-lg text-slate-600 text-sm font-medium"
+                      >
+                        <span className="text-lg">{tech.logo}</span>
+                        <span>{tech.name}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -273,64 +268,17 @@ const Home = () => {
                     <FaEnvelope size={20} className="sm:w-6 sm:h-6" />
                   </a>
                 </div>
-
-                {/* Tecnologías en cadenas animadas */}
-                <div className="mt-8 md:mt-12 space-y-4 w-full">
-                  {/* Primera cadena */}
-                  <div className="flex items-center gap-2 overflow-hidden w-full">
-                    <div className="flex gap-2 animate-scroll-left min-w-max">
-                      {[
-                        "n8n",
-                        "Make",
-                        "Zapier",
-                        "AWS",
-                        "n8n",
-                        "Make",
-                        "Zapier",
-                        "AWS",
-                      ].map((tech, index) => (
-                        <span
-                          key={`chain1-${index}`}
-                          className="text-xs md:text-sm text-slate-700/90 border border-white/60 bg-white/40 backdrop-blur rounded-full px-3 py-1.5 md:px-4 md:py-2 shadow-sm whitespace-nowrap flex-shrink-0"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Segunda cadena */}
-                  <div className="flex items-center gap-2 overflow-hidden w-full">
-                    <div className="flex gap-2 animate-scroll-right min-w-max">
-                      {[
-                        "React",
-                        "Node.js",
-                        "Python",
-                        "SQL",
-                        "React",
-                        "Node.js",
-                        "Python",
-                        "SQL",
-                      ].map((tech, index) => (
-                        <span
-                          key={`chain2-${index}`}
-                          className="text-xs md:text-sm text-slate-700/90 border border-white/60 bg-white/40 backdrop-blur rounded-full px-3 py-1.5 md:px-4 md:py-2 shadow-sm whitespace-nowrap flex-shrink-0"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
               </div>
 
               {/* Visual: hero automation coherent */}
-              <div className="col-span-12 md:col-span-5 order-1 md:order-2 w-full flex justify-center">
-                <div className="w-full h-auto max-h-[50svh] md:max-h-[80svh] flex items-center justify-center mb-6 md:mb-0">
-                  <img
+              <div className="col-span-12 md:col-span-5 order-2 md:order-2 w-full flex justify-center">
+                <div className="w-full h-auto max-h-[40svh] md:max-h-[80svh] flex items-center justify-center mt-4 md:mt-0">
+                  <OptimizedImage
                     src="/img/hero-automation-coherent.svg"
-                    alt="Automatizaciones para negocios digitales"
+                    alt="Automatización de procesos digitales para negocios"
                     className="w-full h-auto object-contain"
+                    priority={true}
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
               </div>
@@ -481,10 +429,12 @@ const Home = () => {
                 <div className="w-full h-64 sm:h-72 md:h-80 flex items-center justify-center">
                   <div className="text-center">
                     <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 mx-auto rounded-full overflow-hidden border-4 border-white shadow-lg">
-                      <img
+                      <OptimizedImage
                         src="/img/profile.png"
                         alt="Benjamín Correa"
                         className="w-full h-full object-cover"
+                        priority={true}
+                        sizes="(max-width: 640px) 192px, (max-width: 768px) 224px, 256px"
                       />
                     </div>
                   </div>
@@ -555,10 +505,11 @@ const Home = () => {
                   className="group rounded-2xl border border-slate-200 p-4 md:p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition transform-gpu"
                 >
                   <div className="relative h-40 sm:h-48 bg-slate-100 overflow-hidden rounded-xl mb-3 md:mb-4">
-                    <img
+                    <OptimizedImage
                       src={p.images[0]}
                       alt={p.title}
                       className="w-full h-full object-cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <a
                       href={p.link}

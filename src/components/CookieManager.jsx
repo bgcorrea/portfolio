@@ -37,7 +37,7 @@ const CookieManager = () => {
 const loadAnalytics = () => {
   // Aquí puedes agregar tu sistema de analytics preferido
   // Por ejemplo, Google Analytics, Plausible, etc.
-  console.log("Analytics habilitado - configura tu sistema de analytics aquí");
+  // Analytics habilitado - configura tu sistema de analytics aquí
 };
 
 // Función para cargar Meta Pixel
@@ -107,7 +107,7 @@ const loadFunctionalCookies = () => {
 export const clearAnalyticsCookies = () => {
   if (typeof window !== "undefined") {
     // Limpiar analytics
-    console.log("Analytics cookies limpiadas");
+    // Analytics cookies limpiadas
 
     // Limpiar Meta Pixel
     if (window.fbq) {

@@ -4,5 +4,9 @@ Allow: /
 # Sitemap
 Sitemap: https://www.benjamincorrea.com/sitemap.xml
 
-# Crawl-delay
+# Disallow admin or private areas (if any)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Allow all crawlers
 Crawl-delay: 1

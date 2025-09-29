@@ -26,7 +26,7 @@ const Footer = () => {
           {/* Enlaces de navegación */}
           <div className="flex flex-wrap gap-6 text-sm">
             <Link
-              to="/"
+              to="/home"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="text-slate-600 hover:text-slate-900 transition-colors"
             >
@@ -40,7 +40,7 @@ const Footer = () => {
               Automatizaciones
             </Link>
             <a
-              href="/#proyectos"
+              href="/home#proyectos"
               onClick={(e) => {
                 e.preventDefault();
                 document.getElementById("proyectos")?.scrollIntoView({
@@ -53,7 +53,7 @@ const Footer = () => {
               Proyectos
             </a>
             <a
-              href="/#sobre-mi"
+              href="/home#sobre-mi"
               onClick={(e) => {
                 e.preventDefault();
                 document.getElementById("sobre-mi")?.scrollIntoView({
@@ -73,7 +73,7 @@ const Footer = () => {
               Blog
             </Link>
             <a
-              href="/#contacto"
+              href="/home#contacto"
               onClick={(e) => {
                 e.preventDefault();
                 document.getElementById("contacto")?.scrollIntoView({

@@ -166,12 +166,6 @@ export default function LeadMagnetForm() {
       </button>
 
       {error && <p style={{ color: "#b91c1c", margin: 0 }}>{error}</p>}
-
-      <small style={{ color: "#6B7280" }}>
-        Descarga gratis mi checklist para identificar en 5 minutos dónde estás
-        perdiendo tiempo y dinero. Incluye ejemplos reales y una plantilla para
-        priorizar.
-      </small>
     </form>
   );
 }

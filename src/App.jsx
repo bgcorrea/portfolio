@@ -1,10 +1,19 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import CookieBanner from "./components/CookieBanner";
 import CookieManager from "./components/CookieManager";
+import GoogleAnalytics from "./components/GoogleAnalytics";
+import WebVitalsOptimizer from "./components/WebVitalsOptimizer";
+import LeadMagnetPopup from "./components/LeadMagnetPopup";
 
 // Lazy loading para páginas pesadas
 const Automatizaciones = lazy(() => import("./pages/Automatizaciones"));
@@ -38,7 +47,7 @@ const AppContent = ({ darkMode }) => {
           }
         >
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Navigate to="/home" replace />} />
             <Route path="/home" element={<Home />} />
             <Route path="/automatizaciones" element={<Automatizaciones />} />
             <Route path="/blog" element={<Blog />} />
@@ -57,9 +66,19 @@ const AppContent = ({ darkMode }) => {
             <Route path="/privacidad" element={<Privacidad />} />
             <Route path="/cookies" element={<Cookies />} />
             <Route path="/redes" element={<Redes />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </main>
+
+      {/* Google Analytics */}
+      <GoogleAnalytics />
+
+      {/* Web Vitals Optimizer */}
+      <WebVitalsOptimizer />
+
+      {/* Lead Magnet Popup */}
+      <LeadMagnetPopup />
 
       {/* Cookie Banner */}
       <CookieBanner />

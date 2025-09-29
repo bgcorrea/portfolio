@@ -57,12 +57,12 @@ const Navbar = () => {
             className="inline-flex items-center hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 rounded-md px-3 py-2"
             onClick={() => {
               trackEvent("navbar_home", "Logo");
-              if (location.pathname === "/") {
+              if (location.pathname === "/home") {
                 // Si ya estamos en home, solo hacer scroll
                 window.scrollTo({ top: 0, behavior: "smooth" });
               } else {
                 // Si estamos en otra página, navegar a home
-                navigate("/");
+                navigate("/home");
               }
             }}
           >
@@ -87,9 +87,9 @@ const Navbar = () => {
               Automatizaciones
             </a>
             <a
-              href="/#proyectos"
+              href="/home#proyectos"
               className={`transition-colors ${
-                location.pathname === "/" &&
+                location.pathname === "/home" &&
                 window.location.hash === "#proyectos"
                   ? "text-slate-900 font-medium"
                   : "text-slate-600 hover:text-slate-900"
@@ -97,14 +97,14 @@ const Navbar = () => {
               onClick={(e) => {
                 e.preventDefault();
                 trackEvent("navbar_proyectos", "Nav");
-                if (location.pathname === "/") {
+                if (location.pathname === "/home") {
                   document.getElementById("proyectos")?.scrollIntoView({
                     behavior: "smooth",
                     block: "start",
                   });
                 } else {
                   // Redirigir al Home y hacer scroll después de que cargue
-                  window.location.href = "/";
+                  window.location.href = "/home";
                   // Esperar a que la página cargue y luego hacer scroll
                   setTimeout(() => {
                     const checkElement = () => {
@@ -127,9 +127,9 @@ const Navbar = () => {
               Proyectos
             </a>
             <a
-              href="/#sobre-mi"
+              href="/home#sobre-mi"
               className={`transition-colors ${
-                location.pathname === "/" &&
+                location.pathname === "/home" &&
                 window.location.hash === "#sobre-mi"
                   ? "text-slate-900 font-medium"
                   : "text-slate-600 hover:text-slate-900"
@@ -137,14 +137,14 @@ const Navbar = () => {
               onClick={(e) => {
                 e.preventDefault();
                 trackEvent("navbar_sobre_mi", "Nav");
-                if (location.pathname === "/") {
+                if (location.pathname === "/home") {
                   document.getElementById("sobre-mi")?.scrollIntoView({
                     behavior: "smooth",
                     block: "start",
                   });
                 } else {
                   // Redirigir al Home y hacer scroll después de que cargue
-                  window.location.href = "/";
+                  window.location.href = "/home";
                   // Esperar a que la página cargue y luego hacer scroll
                   setTimeout(() => {
                     const checkElement = () => {
@@ -181,7 +181,7 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <a
-            href="/#contacto"
+            href="/home#contacto"
             className="hidden md:inline-flex items-center gap-2 rounded-xl border border-slate-300 px-5 py-3 font-medium hover:bg-slate-50 transition"
             onClick={(e) => {
               e.preventDefault();
@@ -228,9 +228,9 @@ const Navbar = () => {
                 Automatizaciones
               </a>
               <a
-                href="/#proyectos"
+                href="/home#proyectos"
                 className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                  location.pathname === "/" &&
+                  location.pathname === "/home" &&
                   window.location.hash === "#proyectos"
                     ? "text-slate-900 bg-slate-100"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
@@ -239,14 +239,14 @@ const Navbar = () => {
                   e.preventDefault();
                   trackEvent("navbar_proyectos", "Mobile");
                   setIsMobileMenuOpen(false);
-                  if (location.pathname === "/") {
+                  if (location.pathname === "/home") {
                     document.getElementById("proyectos")?.scrollIntoView({
                       behavior: "smooth",
                       block: "start",
                     });
                   } else {
                     // Redirigir al Home y hacer scroll después de que cargue
-                    window.location.href = "/";
+                    window.location.href = "/home";
                     // Esperar a que la página cargue y luego hacer scroll
                     setTimeout(() => {
                       const checkElement = () => {
@@ -269,9 +269,9 @@ const Navbar = () => {
                 Proyectos
               </a>
               <a
-                href="/#sobre-mi"
+                href="/home#sobre-mi"
                 className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                  location.pathname === "/" &&
+                  location.pathname === "/home" &&
                   window.location.hash === "#sobre-mi"
                     ? "text-slate-900 bg-slate-100"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
@@ -280,14 +280,14 @@ const Navbar = () => {
                   e.preventDefault();
                   trackEvent("navbar_sobre_mi", "Mobile");
                   setIsMobileMenuOpen(false);
-                  if (location.pathname === "/") {
+                  if (location.pathname === "/home") {
                     document.getElementById("sobre-mi")?.scrollIntoView({
                       behavior: "smooth",
                       block: "start",
                     });
                   } else {
                     // Redirigir al Home y hacer scroll después de que cargue
-                    window.location.href = "/";
+                    window.location.href = "/home";
                     // Esperar a que la página cargue y luego hacer scroll
                     setTimeout(() => {
                       const checkElement = () => {
@@ -324,7 +324,7 @@ const Navbar = () => {
                 Blog
               </a>
               <a
-                href="/#contacto"
+                href="/home#contacto"
                 className="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
                 onClick={(e) => {
                   e.preventDefault();

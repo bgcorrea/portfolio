@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet-async";
+import SEO from "../components/SEO";
 import LeadMagnetForm from "../components/LeadMagnetForm";
 import Footer from "../components/Footer";
 import ScrollAnimatedSection from "../components/ScrollAnimatedSection";
@@ -60,16 +60,70 @@ function useCalEmbed() {
 const Automatizaciones = () => {
   useCalEmbed();
 
-  // Variantes de animación
-  // const fadeUpVariants = {
-  //   hidden: { opacity: 0, y: 20 },
-  //   visible: {
-  //     opacity: 1,
-  //     y: 0,
-  //     transition: { duration: 0.6, ease: "easeOut" },
-  //   },
-  // };
+  // SEO y JSON-LD
+  const canonical = "https://www.benjamincorrea.com/automatizaciones";
+  const title =
+    "Automatizaciones empresariales – Diseño, implementación y soporte";
+  const description =
+    "Automatizaciones empresariales: diseño, implementación y monitoreo. Ahorra tiempo y dinero con procesos conectados a tu negocio.";
+  const faq = [
+    {
+      q: "¿Qué procesos puedo automatizar primero?",
+      a: "Ventas/leads, soporte, reportes, facturación y tareas administrativas suelen ser quick wins.",
+    },
+    {
+      q: "¿Cuánto tarda una implementación?",
+      a: "Entre 7 y 30 días dependiendo del alcance y cantidad de integraciones.",
+    },
+    {
+      q: "¿Qué tecnologías usas?",
+      a: "Stack full-stack con low-code cuando aporta velocidad (n8n/Make) y código propio para nodos e integraciones.",
+    },
+    {
+      q: "¿Ofreces soporte?",
+      a: "Sí, incluyo soporte posterior a la puesta en marcha para asegurar estabilidad y mejoras.",
+    },
+  ];
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: "Automatizaciones empresariales",
+      provider: { "@type": "Person", name: "Benjamín Correa" },
+      areaServed: "CL",
+      serviceType: "Automatización de procesos",
+      url: canonical,
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Inicio",
+          item: "https://www.benjamincorrea.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Automatizaciones",
+          item: canonical,
+        },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faq.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+  ];
 
+  // Variantes de animación
   const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
@@ -239,63 +293,18 @@ const Automatizaciones = () => {
 
   return (
     <main className="min-h-screen bg-white text-gray-900 pb-20 sm:pb-0">
-      <Helmet>
-        <title>Automatizaciones | Benjamín Correa</title>
-        <meta
-          name="description"
-          content="Servicios de automatización empresarial - Optimiza procesos, reduce costos y aumenta la eficiencia de tu negocio"
-        />
-      </Helmet>
-      {/* Navbar Flotante */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Botón Home */}
-            <a
-              href="/"
-              className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md px-3 py-2"
-              onClick={() => trackEvent("lp_auto_home", "Navbar")}
-            >
-              <svg
-                className="w-5 h-5 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                />
-              </svg>
-              <span className="font-medium">Inicio</span>
-            </a>
-
-            {/* CTA Principal */}
-            <button
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shadow-sm"
-              onClick={() => {
-                trackEvent("lp_auto_agendar", "Navbar");
-                const element = document.getElementById("diagnostico-gratuito");
-                if (element) {
-                  const elementPosition = element.offsetTop - 60; // 4cm arriba
-                  window.scrollTo({
-                    top: elementPosition,
-                    behavior: "smooth",
-                  });
-                }
-              }}
-            >
-              Agendar reunión
-            </button>
-          </div>
-        </div>
-      </nav>
+      <SEO
+        title={title}
+        description={description}
+        canonical={canonical}
+        ogImage="https://www.benjamincorrea.com/og-automatizaciones.jpg"
+        jsonLd={jsonLd}
+      />
 
       {/* HERO */}
+
       <section
-        className="relative pt-24 px-4 py-20 md:pt-28 md:py-24 overflow-hidden"
+        className="relative pt-20 px-4 py-20 md:pt-24 md:py-24 overflow-hidden"
         style={{
           backgroundImage: "url(/img/hero-automation-coherent.svg)",
           backgroundSize: "contain",
@@ -312,7 +321,7 @@ const Automatizaciones = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            Escala tu negocio digital sin contratar más personal
+            Automatizaciones empresariales – Diseño, implementación y soporte
           </motion.h1>
 
           <motion.p
@@ -689,7 +698,48 @@ const Automatizaciones = () => {
         </ScrollAnimatedSection>
       </section>
 
-      {/* CALENDARIO EMBEBIDO */}
+      {/* FAQ SECTION */}
+      <section className="py-16 px-4 bg-white">
+        <ScrollAnimatedSection className="max-w-6xl mx-auto" delay={800}>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
+            <motion.h2
+              className="text-3xl font-bold text-gray-900 mb-8"
+              variants={staggerItem}
+            >
+              Preguntas frecuentes
+            </motion.h2>
+            <motion.div
+              className="divide-y rounded-xl border"
+              variants={staggerItem}
+            >
+              {faq.map((f, idx) => (
+                <details key={idx} className="p-4">
+                  <summary className="cursor-pointer font-medium">
+                    {f.q}
+                  </summary>
+                  <p className="mt-2 text-gray-700">{f.a}</p>
+                </details>
+              ))}
+            </motion.div>
+
+            <motion.div className="mt-10" variants={staggerItem}>
+              <a
+                className="inline-block rounded-xl border px-5 py-3 font-semibold hover:bg-gray-50"
+                href="#contact"
+              >
+                Agenda un diagnóstico gratuito
+              </a>
+            </motion.div>
+          </motion.div>
+        </ScrollAnimatedSection>
+      </section>
+
+      {/* CALENDARIO EMBEBIDO - AL FINAL */}
       <section id="diagnostico-gratuito" className="py-16 px-4 bg-white">
         <ScrollAnimatedSection className="max-w-6xl mx-auto" delay={400}>
           <motion.div

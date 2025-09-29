@@ -1,10 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
@@ -13,9 +8,21 @@ import CookieManager from "./components/CookieManager";
 
 // Lazy loading para páginas pesadas
 const Automatizaciones = lazy(() => import("./pages/Automatizaciones"));
+const Blog = lazy(() => import("./pages/Blog"));
 const Privacidad = lazy(() => import("./pages/Privacidad"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const Redes = lazy(() => import("./pages/Redes"));
+
+// Lazy loading para artículos del blog
+const Articulo5Procesos = lazy(() =>
+  import("./pages/articles/5-procesos-automatizar-primero")
+);
+const ArticuloElegirHerramienta = lazy(() =>
+  import("./pages/articles/elegir-herramienta-automatizacion")
+);
+const ArticuloErroresComunes = lazy(() =>
+  import("./pages/articles/errores-comunes-automatizaciones")
+);
 
 // Componente interno para manejar el navbar condicional
 const AppContent = ({ darkMode }) => {
@@ -32,7 +39,21 @@ const AppContent = ({ darkMode }) => {
         >
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/automatizaciones" element={<Automatizaciones />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route
+              path="/blog/5-procesos-automatizar-primero"
+              element={<Articulo5Procesos />}
+            />
+            <Route
+              path="/blog/elegir-herramienta-automatizacion"
+              element={<ArticuloElegirHerramienta />}
+            />
+            <Route
+              path="/blog/errores-comunes-automatizaciones"
+              element={<ArticuloErroresComunes />}
+            />
             <Route path="/privacidad" element={<Privacidad />} />
             <Route path="/cookies" element={<Cookies />} />
             <Route path="/redes" element={<Redes />} />

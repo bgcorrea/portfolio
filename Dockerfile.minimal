@@ -1,0 +1,30 @@
+FROM node:20-alpine
+
+# Instalar pnpm globalmente
+RUN npm install -g pnpm
+
+# Crear directorio de trabajo
+WORKDIR /app
+
+# Copiar archivos de dependencias primero
+COPY package.json pnpm-lock.yaml ./
+
+# Instalar dependencias
+RUN pnpm install --frozen-lockfile
+
+# Copiar solo los archivos necesarios
+COPY src ./src
+COPY public ./public
+COPY server.js ./
+COPY tailwind.config.js ./
+COPY postcss.config.js ./
+
+# Construir la aplicación
+RUN pnpm run build
+
+# Exponer puerto
+EXPOSE 3000
+
+# Comando de inicio
+CMD ["pnpm", "run", "start"]
+

@@ -6,38 +6,24 @@ import {
   FaInstagram,
   FaTiktok,
   FaYoutube,
+  FaUsers,
+  FaHeadset,
+  FaChartLine,
+  FaFileInvoice,
+  FaClock,
+  FaShieldAlt,
+  FaRocket,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import React from "react";
+import SEO from "../components/SEO";
 import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
 import ScrollAnimatedSection from "../components/ScrollAnimatedSection";
 
 const Home = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [showContent, setShowContent] = useState(false);
-
-  // Mostrar loading por exactamente 1 segundo
-  useEffect(() => {
-    setIsLoading(true);
-    setShowContent(false);
-
-    // Tiempo de carga fijo de 1 segundo
-    const loadingTime = 1000; // Exactamente 1000ms
-
-    setTimeout(() => {
-      setIsLoading(false);
-      setTimeout(() => {
-        setShowContent(true);
-      }, 300); // Transición suave
-    }, loadingTime);
-  }, []);
-
   const socialLinks = {
-    github: "https://github.com/bgcorrea",
-    linkedin: "https://www.linkedin.com/in/benjamin-correa-penaloza/",
+    github: "https://github.com/soybenjacorrea",
+    linkedin: "https://www.linkedin.com/in/benjamincorrea",
     email: "mailto:contacto@benjamincorrea.com",
     instagram: "https://www.instagram.com/soybenjacorrea",
     tiktok: "https://www.tiktok.com/@bgcorrea",
@@ -87,423 +73,560 @@ const Home = () => {
     },
   ];
 
-  const handleMouseEnter = (projectId) => {
-    const project = projects.find((p) => p.id === projectId);
-    if (project.images.length > 1) {
-      const interval = setInterval(() => {
-        setCurrentImageIndex((prev) => ({
-          ...prev,
-          [projectId]: ((prev[projectId] || 0) + 1) % project.images.length,
-        }));
-      }, 2000);
-      return () => clearInterval(interval);
-    }
-  };
-
-  const handleMouseLeave = (projectId) => {
-    setCurrentImageIndex((prev) => ({
-      ...prev,
-      [projectId]: 0,
-    }));
-  };
-
-  // Componente de Loading
-  const LoadingScreen = () => (
-    <div className="fixed inset-0 bg-white flex items-center justify-center z-50">
-      <div className="text-center">
-        <div className="mb-8">
-          <img
-            src="/img/hero-automation-coherent.svg"
-            alt="Benjamín Correa - Automatizaciones"
-            className="w-32 h-32 mx-auto animate-pulse"
-          />
-        </div>
-        <div className="text-gray-900">
-          <h2 className="text-2xl font-bold mb-2">Benjamín Correa</h2>
-          <p className="text-gray-600">Cargando automatizaciones...</p>
-        </div>
-        <div className="mt-8">
-          <div className="w-64 h-1 bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-indigo-600 rounded-full"
-              style={{
-                animation: "loading-bar 1s ease-in-out forwards",
-              }}
-            ></div>
-          </div>
-        </div>
-      </div>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          @keyframes loading-bar {
-            0% { width: 0%; }
-            20% { width: 30%; }
-            40% { width: 60%; }
-            60% { width: 80%; }
-            80% { width: 95%; }
-            100% { width: 100%; }
-          }
-        `,
-        }}
-      />
-    </div>
-  );
+  // SEO y JSON-LD
+  const canonical = "https://www.benjamincorrea.com/";
+  const title = "Benjamín Correa | Automatizaciones";
+  const description =
+    "Especialista en automatizaciones para negocios digitales. Reduzco trabajo manual, errores y costos para que tu equipo gane tiempo real.";
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      url: "https://www.benjamincorrea.com/",
+      name: "Benjamín Correa",
+      inLanguage: "es",
+      publisher: { "@type": "Person", name: "Benjamín Correa" },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: "Benjamín Correa",
+      url: "https://www.benjamincorrea.com/",
+      jobTitle: "Especialista en Automatizaciones",
+      sameAs: [
+        "https://www.linkedin.com/in/benjamincorrea",
+        "https://github.com/soybenjacorrea",
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Inicio",
+          item: "https://www.benjamincorrea.com/",
+        },
+      ],
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-white">
-      <Helmet>
-        <title>Benjamín Correa | Automatizaciones</title>
-        <meta
-          name="description"
-          content="Especialista en Automatizaciones - Optimiza tu negocio con tecnología avanzada"
-        />
-      </Helmet>
+      <SEO
+        title={title}
+        description={description}
+        canonical={canonical}
+        ogImage="https://www.benjamincorrea.com/og-image.jpg"
+        jsonLd={jsonLd}
+      />
 
-      {/* Loading Screen */}
-      {isLoading && <LoadingScreen />}
+      {/* Estilos para animaciones de cadenas */}
+      <style>{`
+        @keyframes scroll-left {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
+        }
+
+        @keyframes scroll-right {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+
+        .animate-scroll-left {
+          animation: scroll-left 20s linear infinite;
+        }
+
+        .animate-scroll-right {
+          animation: scroll-right 20s linear infinite;
+        }
+
+        .animate-scroll-left:hover,
+        .animate-scroll-right:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
 
       {/* Main Content */}
-      {showContent && (
-        <div
-          className={`transition-opacity duration-500 ${
-            showContent ? "opacity-100" : "opacity-0"
-          }`}
+      <div>
+        {/* Hero Section */}
+        <section
+          className="
+            relative overflow-x-clip
+            pt-[calc(var(--nav-h,64px)+env(safe-area-inset-top))]
+            pb-[calc(16px+env(safe-area-inset-bottom))]
+            min-h-[calc(100dvh-var(--nav-h,64px))]
+            md:pt-20 md:pb-20 md:min-h-screen md:flex md:items-center
+          "
         >
-          {/* Hero Section */}
-          <section className="pt-24 px-4 py-16 md:pt-28 md:py-24 bg-gradient-to-br from-indigo-50 to-white">
-            <ScrollAnimatedSection className="max-w-6xl mx-auto">
-              <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
-                <div className="flex-shrink-0">
-                  <div className="w-48 h-48 lg:w-64 lg:h-64 rounded-full overflow-hidden border-4 border-indigo-200 shadow-xl">
-                    <img
-                      src="/img/profile.png"
-                      alt="Benjamín Correa"
-                      className="w-full h-full object-cover"
-                    />
+          {/* Fondo: gradiente + pattern */}
+          <div className="absolute inset-0 -z-10 bg-white">
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_50%_0%,rgba(124,58,237,0.08),transparent_60%)]" />
+            <div className="absolute inset-0 -z-10 [-webkit-mask-image:radial-gradient(black,transparent_75%)] [mask-image:radial-gradient(black,transparent_75%)] bg-[linear-gradient(to_right,rgba(15,23,42,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.05)_1px,transparent_1px)] bg-[size:20px_20px]" />
+          </div>
+
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-6 overflow-x-clip">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 md:items-center">
+              <div className="col-span-12 md:col-span-7 order-2 md:order-1 w-full">
+                <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-7xl font-bold text-slate-900 leading-tight break-words">
+                  Automatizaciones para negocios digitales
+                </h1>
+                <p className="mt-4 md:mt-6 text-sm sm:text-base md:text-xl lg:text-2xl text-slate-700 max-w-3xl leading-relaxed break-words">
+                  Implemento automatizaciones end-to-end para reducir tiempos,
+                  eliminar tareas repetitivas y minimizar errores operativos.
+                  Conecto tus sistemas (CRM, correo, bases de datos,
+                  formularios, e-commerce) con lógica de negocio real para que
+                  tu equipo gane tiempo real y tu empresa escale sin contratar
+                  más personal.
+                </p>
+                <div className="mt-8 md:mt-10 flex flex-col gap-6 w-full">
+                  <a
+                    href="/automatizaciones"
+                    className="inline-flex items-center justify-center rounded-xl bg-violet-600 text-white px-8 py-5 font-medium hover:bg-violet-700 transition text-lg w-full sm:w-auto"
+                  >
+                    Ver servicios de automatización
+                  </a>
+                  <div className="flex flex-col sm:flex-row gap-3 w-full">
+                    <a
+                      href="/#contacto"
+                      className="inline-flex items-center justify-center rounded-xl border border-slate-300 px-8 py-5 font-medium hover:bg-slate-50 transition text-lg flex-1 w-full sm:w-auto"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        document.getElementById("contacto")?.scrollIntoView({
+                          behavior: "smooth",
+                          block: "start",
+                        });
+                      }}
+                    >
+                      Contáctame
+                    </a>
+                    <a
+                      href="/automatizaciones#diagnostico-gratuito"
+                      className="inline-flex items-center justify-center rounded-xl bg-slate-900 text-white px-8 py-5 font-medium hover:bg-slate-800 transition text-lg flex-1 w-full sm:w-auto"
+                    >
+                      Agendar reunión
+                    </a>
                   </div>
                 </div>
-                <div className="text-center lg:text-left flex-1">
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
-                    Benjamín Correa
-                  </h1>
-                  <h2 className="text-xl md:text-2xl lg:text-3xl text-indigo-600 mb-6">
-                    Desarrollador Full Stack & Especialista en Automatizaciones
-                  </h2>
-                  <p className="text-lg text-gray-600 mb-8 max-w-2xl">
-                    Transformo procesos empresariales mediante automatización
-                    inteligente, desarrollo web moderno y análisis de datos.
-                    Ayudo a empresas a escalar sin contratar más personal.
-                  </p>
-                  <div className="flex justify-center lg:justify-start gap-4 mb-8 flex-wrap">
-                    <a
-                      href={socialLinks.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-indigo-600 transition-colors"
-                    >
-                      <FaGithub size={28} />
-                    </a>
-                    <a
-                      href={socialLinks.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-indigo-600 transition-colors"
-                    >
-                      <FaLinkedin size={28} />
-                    </a>
-                    <a
-                      href={socialLinks.instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-indigo-600 transition-colors"
-                    >
-                      <FaInstagram size={28} />
-                    </a>
-                    <a
-                      href={socialLinks.tiktok}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-indigo-600 transition-colors"
-                    >
-                      <FaTiktok size={28} />
-                    </a>
-                    <a
-                      href={socialLinks.youtube}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-indigo-600 transition-colors"
-                    >
-                      <FaYoutube size={28} />
-                    </a>
-                    <a
-                      href={socialLinks.email}
-                      className="text-gray-600 hover:text-indigo-600 transition-colors"
-                    >
-                      <FaEnvelope size={28} />
-                    </a>
+
+                {/* Redes sociales */}
+                <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-6">
+                  <a
+                    href={socialLinks.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-600 hover:text-violet-600 transition-colors p-2"
+                    aria-label="LinkedIn"
+                  >
+                    <FaLinkedin size={20} className="sm:w-6 sm:h-6" />
+                  </a>
+                  <a
+                    href={socialLinks.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-600 hover:text-violet-600 transition-colors p-2"
+                    aria-label="GitHub"
+                  >
+                    <FaGithub size={20} className="sm:w-6 sm:h-6" />
+                  </a>
+                  <a
+                    href={socialLinks.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-600 hover:text-violet-600 transition-colors p-2"
+                    aria-label="Instagram"
+                  >
+                    <FaInstagram className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </a>
+                  <a
+                    href={socialLinks.tiktok}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-600 hover:text-violet-600 transition-colors p-2"
+                    aria-label="TikTok"
+                  >
+                    <FaTiktok size={20} className="sm:w-6 sm:h-6" />
+                  </a>
+                  <a
+                    href={socialLinks.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-600 hover:text-violet-600 transition-colors p-2"
+                    aria-label="YouTube"
+                  >
+                    <FaYoutube size={20} className="sm:w-6 sm:h-6" />
+                  </a>
+                  <a
+                    href={socialLinks.email}
+                    className="text-slate-600 hover:text-violet-600 transition-colors p-2"
+                    aria-label="Email"
+                  >
+                    <FaEnvelope size={20} className="sm:w-6 sm:h-6" />
+                  </a>
+                </div>
+
+                {/* Tecnologías en cadenas animadas */}
+                <div className="mt-8 md:mt-12 space-y-4 w-full">
+                  {/* Primera cadena */}
+                  <div className="flex items-center gap-2 overflow-hidden w-full">
+                    <div className="flex gap-2 animate-scroll-left min-w-max">
+                      {[
+                        "n8n",
+                        "Make",
+                        "Zapier",
+                        "AWS",
+                        "n8n",
+                        "Make",
+                        "Zapier",
+                        "AWS",
+                      ].map((tech, index) => (
+                        <span
+                          key={`chain1-${index}`}
+                          className="text-xs md:text-sm text-slate-700/90 border border-white/60 bg-white/40 backdrop-blur rounded-full px-3 py-1.5 md:px-4 md:py-2 shadow-sm whitespace-nowrap flex-shrink-0"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <Link
-                      to="/automatizaciones"
-                      className="inline-flex items-center justify-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-colors"
-                    >
-                      Ver Automatizaciones
-                    </Link>
-                    <a
-                      href="#contact"
-                      className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors"
-                    >
-                      Contacto
-                    </a>
+
+                  {/* Segunda cadena */}
+                  <div className="flex items-center gap-2 overflow-hidden w-full">
+                    <div className="flex gap-2 animate-scroll-right min-w-max">
+                      {[
+                        "React",
+                        "Node.js",
+                        "Python",
+                        "SQL",
+                        "React",
+                        "Node.js",
+                        "Python",
+                        "SQL",
+                      ].map((tech, index) => (
+                        <span
+                          key={`chain2-${index}`}
+                          className="text-xs md:text-sm text-slate-700/90 border border-white/60 bg-white/40 backdrop-blur rounded-full px-3 py-1.5 md:px-4 md:py-2 shadow-sm whitespace-nowrap flex-shrink-0"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-            </ScrollAnimatedSection>
-          </section>
 
-          {/* About Section */}
-          <section className="py-16 px-4 bg-white">
-            <ScrollAnimatedSection className="max-w-6xl mx-auto" delay={200}>
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              {/* Visual: hero automation coherent */}
+              <div className="col-span-12 md:col-span-5 order-1 md:order-2 w-full flex justify-center">
+                <div className="w-full h-auto max-h-[50svh] md:max-h-[80svh] flex items-center justify-center mb-6 md:mb-0">
+                  <img
+                    src="/img/hero-automation-coherent.svg"
+                    alt="Automatizaciones para negocios digitales"
+                    className="w-full h-auto object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <hr className="border-gray-200 my-12" />
+
+        {/* ¿Qué automatizo? Section */}
+        <section className="py-8 md:py-16">
+          <ScrollAnimatedSection
+            className="max-w-7xl mx-auto px-4 md:px-6"
+            delay={200}
+          >
+            <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">
+              ¿Qué automatizo?
+            </h2>
+            <p className="mt-3 md:mt-4 text-base sm:text-lg text-slate-700 max-w-3xl">
+              Ventas/leads, soporte, reportes, facturación y administración. Mis
+              automatizaciones conectan tus sistemas (CRM, correo, bases de
+              datos, formularios, e-commerce) con lógica de negocio real para
+              optimizar procesos y reducir costos operativos.
+            </p>
+
+            <div className="mt-6 md:mt-8 grid sm:grid-cols-2 gap-4 md:gap-6">
+              {[
+                {
+                  t: "Leads & Enriquecimiento",
+                  d: "Captura, cualificación y ruteo inteligente.",
+                  icon: FaUsers,
+                },
+                {
+                  t: "Soporte & SLAs",
+                  d: "Tickets con respuestas asistidas y métricas.",
+                  icon: FaHeadset,
+                },
+                {
+                  t: "Reportes & KPIs",
+                  d: "Dashboards y alertas automáticas.",
+                  icon: FaChartLine,
+                },
+                {
+                  t: "Facturación & Backoffice",
+                  d: "Integración y conciliaciones sin fricción.",
+                  icon: FaFileInvoice,
+                },
+              ].map((item) => {
+                const IconComponent = item.icon;
+                return (
+                  <div
+                    key={item.t}
+                    className="flex gap-3 md:gap-4 rounded-2xl border border-slate-200 p-4 md:p-5 shadow-sm hover:shadow-md transition"
+                  >
+                    <div className="h-8 w-8 md:h-10 md:w-10 rounded-lg bg-violet-100 flex items-center justify-center flex-shrink-0">
+                      <IconComponent className="h-4 w-4 md:h-5 md:w-5 text-violet-600" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="text-base md:text-lg font-semibold text-slate-900">
+                        {item.t}
+                      </h3>
+                      <p className="text-sm md:text-base text-slate-700 mt-1">
+                        {item.d}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </ScrollAnimatedSection>
+        </section>
+
+        {/* Beneficios clave Section */}
+        <section className="py-8 md:py-12">
+          <ScrollAnimatedSection
+            className="max-w-7xl mx-auto px-4 md:px-6"
+            delay={400}
+          >
+            <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">
+              Beneficios clave
+            </h2>
+            <div className="mt-6 md:mt-8 grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              {[
+                {
+                  t: "Menos trabajo y costo",
+                  d: "Elimina tareas repetitivas y libera horas del equipo.",
+                  icon: FaClock,
+                },
+                {
+                  t: "Datos confiables",
+                  d: "Procesos trazables y documentados end-to-end.",
+                  icon: FaShieldAlt,
+                },
+                {
+                  t: "Implementación rápida",
+                  d: "Resultados en 7–30 días según el alcance.",
+                  icon: FaRocket,
+                },
+              ].map((b) => {
+                const IconComponent = b.icon;
+                return (
+                  <article
+                    key={b.t}
+                    className="group rounded-2xl border border-slate-200 p-4 md:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition transform-gpu"
+                  >
+                    <div className="h-8 w-8 md:h-10 md:w-10 rounded-lg bg-violet-100 mb-3 flex items-center justify-center">
+                      <IconComponent className="h-4 w-4 md:h-5 md:w-5 text-violet-600" />
+                    </div>
+                    <h3 className="text-base md:text-lg font-semibold text-slate-900">
+                      {b.t}
+                    </h3>
+                    <p className="mt-2 text-sm md:text-base text-slate-700">
+                      {b.d}
+                    </p>
+                  </article>
+                );
+              })}
+            </div>
+          </ScrollAnimatedSection>
+        </section>
+
+        {/* Sobre Mí Section */}
+        <section
+          id="sobre-mi"
+          className="py-8 md:py-16 scroll-mt-[var(--nav-h,64px)]"
+        >
+          <ScrollAnimatedSection
+            className="max-w-7xl mx-auto px-4 md:px-6"
+            delay={500}
+          >
+            <div className="grid md:grid-cols-12 gap-8 md:gap-10 items-center">
+              <div className="md:col-span-7 order-2 md:order-1">
+                <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900 mb-4 md:mb-6">
                   Sobre Mí
                 </h2>
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                <p className="text-base sm:text-lg text-slate-700 leading-relaxed mb-4 md:mb-6">
                   Especialista en automatización de procesos empresariales con
                   más de 3 años de experiencia en desarrollo full stack y
                   análisis de datos.
                 </p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                    Mi Enfoque
-                  </h3>
-                  <div className="space-y-4">
-                    <p className="text-gray-600 leading-relaxed">
-                      Creo que la tecnología debe estar al servicio de las
-                      personas, no al revés. Desde hace más de 3 años ayudo a
-                      empresas y emprendedores a{" "}
-                      <strong>simplificar sus procesos</strong>, reducir el
-                      trabajo manual y liberar tiempo valioso.
-                    </p>
-                    <p className="text-gray-600 leading-relaxed">
-                      Me gusta escuchar, entender la forma en que cada negocio
-                      funciona y luego <strong>diseñar soluciones</strong> que
-                      hagan que todo fluya de manera más simple. La
-                      automatización, el desarrollo web y el análisis de datos
-                      son mis herramientas, pero lo que realmente me motiva es
-                      ver cómo las personas ganan libertad para enfocarse en lo
-                      que más les importa.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-indigo-50 rounded-xl p-6 border border-indigo-100">
-                    <h4 className="font-semibold text-indigo-900 mb-2">
-                      Automatización
-                    </h4>
-                    <p className="text-indigo-700 text-sm">
-                      n8n, Make, Zapier, APIs
-                    </p>
-                  </div>
-                  <div className="bg-indigo-50 rounded-xl p-6 border border-indigo-100">
-                    <h4 className="font-semibold text-indigo-900 mb-2">
-                      Desarrollo Web
-                    </h4>
-                    <p className="text-indigo-700 text-sm">
-                      React, Node.js, Java, Spring Boot
-                    </p>
-                  </div>
-                  <div className="bg-indigo-50 rounded-xl p-6 border border-indigo-100">
-                    <h4 className="font-semibold text-indigo-900 mb-2">
-                      Cloud & DevOps
-                    </h4>
-                    <p className="text-indigo-700 text-sm">
-                      AWS, Docker, CI/CD
-                    </p>
-                  </div>
-                  <div className="bg-indigo-50 rounded-xl p-6 border border-indigo-100">
-                    <h4 className="font-semibold text-indigo-900 mb-2">
-                      Análisis de Datos
-                    </h4>
-                    <p className="text-indigo-700 text-sm">
-                      Python, SQL, Visualización
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </ScrollAnimatedSection>
-          </section>
-
-          {/* Projects Section */}
-          <section className="py-16 px-4 bg-gray-50">
-            <ScrollAnimatedSection className="max-w-6xl mx-auto" delay={400}>
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  Proyectos Destacados
-                </h2>
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Soluciones tecnológicas que han transformado procesos
-                  empresariales y mejorado la eficiencia operacional.
+                <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+                  Creo que la tecnología debe estar al servicio de las personas,
+                  no al revés. Desde hace más de 3 años ayudo a empresas y
+                  emprendedores a simplificar sus procesos, reducir el trabajo
+                  manual y liberar tiempo valioso.
                 </p>
               </div>
-
-              <div className="grid md:grid-cols-2 gap-8">
-                {projects.map((project) => (
-                  <div
-                    key={project.id}
-                    className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
-                    onMouseEnter={() => handleMouseEnter(project.id)}
-                    onMouseLeave={() => handleMouseLeave(project.id)}
-                  >
-                    <div className="relative h-48 bg-gray-100 overflow-hidden">
+              <div className="md:col-span-5 order-1 md:order-2">
+                <div className="w-full h-64 sm:h-72 md:h-80 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 mx-auto rounded-full overflow-hidden border-4 border-white shadow-lg">
                       <img
-                        src={project.images[currentImageIndex[project.id] || 0]}
-                        alt={project.title}
+                        src="/img/profile.png"
+                        alt="Benjamín Correa"
                         className="w-full h-full object-cover"
                       />
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="absolute top-4 right-4 bg-white/90 hover:bg-white text-gray-700 p-2 rounded-lg transition-colors"
-                      >
-                        <FaExternalLinkAlt size={16} />
-                      </a>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-600 mb-4 leading-relaxed">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-3 py-1 bg-indigo-100 text-indigo-700 text-sm rounded-full"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
                     </div>
                   </div>
-                ))}
+                </div>
               </div>
-            </ScrollAnimatedSection>
-          </section>
+            </div>
 
-          {/* Contact Section */}
-          <section id="contact" className="py-16 px-4 bg-white">
-            <ScrollAnimatedSection className="max-w-6xl mx-auto" delay={600}>
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  Contacto
-                </h2>
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  ¿Tienes un proceso que quieres automatizar? Hablemos sobre
-                  cómo puedo ayudarte a escalar tu negocio.
+            <div className="mt-8 md:mt-12 grid md:grid-cols-2 gap-6 md:gap-8">
+              <div className="rounded-2xl border border-slate-200 p-4 md:p-6 shadow-sm">
+                <h3 className="text-lg md:text-xl font-semibold text-slate-900 mb-3 md:mb-4">
+                  Mi Experiencia
+                </h3>
+                <ul className="space-y-2 md:space-y-3 text-sm md:text-base text-slate-700">
+                  <li className="flex items-start gap-3">
+                    <div className="h-2 w-2 rounded-full bg-violet-600 mt-2 flex-shrink-0" />
+                    <span>Más de 3 años en desarrollo full stack</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="h-2 w-2 rounded-full bg-violet-600 mt-2 flex-shrink-0" />
+                    <span>Especialización en automatización de procesos</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="h-2 w-2 rounded-full bg-violet-600 mt-2 flex-shrink-0" />
+                    <span>Análisis de datos y optimización</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="h-2 w-2 rounded-full bg-violet-600 mt-2 flex-shrink-0" />
+                    <span>Experiencia con múltiples industrias</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 p-4 md:p-6 shadow-sm">
+                <h3 className="text-lg md:text-xl font-semibold text-slate-900 mb-3 md:mb-4">
+                  Mi Filosofía
+                </h3>
+                <p className="text-sm md:text-base text-slate-700">
+                  La tecnología debe ser invisible y funcional. Mi objetivo es
+                  crear soluciones que funcionen tan bien que las personas
+                  puedan olvidarse de que existen, enfocándose en lo que
+                  realmente importa para su negocio.
                 </p>
               </div>
+            </div>
+          </ScrollAnimatedSection>
+        </section>
 
-              <div className="grid lg:grid-cols-2 gap-12">
-                {/* Contact Information */}
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                    Información de Contacto
-                  </h3>
-                  <div className="space-y-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
-                        <FaEnvelope className="text-indigo-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-900">Email</h4>
-                        <a
-                          href="mailto:contacto@benjamincorrea.com"
-                          className="text-indigo-600 hover:text-indigo-700 transition-colors"
-                        >
-                          contacto@benjamincorrea.com
-                        </a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
-                        <FaGithub className="text-indigo-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-900">GitHub</h4>
-                        <a
-                          href="https://github.com/bgcorrea"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-indigo-600 hover:text-indigo-700 transition-colors"
-                        >
-                          github.com/bgcorrea
-                        </a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
-                        <FaLinkedin className="text-indigo-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-900">
-                          LinkedIn
-                        </h4>
-                        <a
-                          href="https://www.linkedin.com/in/benjamin-correa-penaloza/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-indigo-600 hover:text-indigo-700 transition-colors"
-                        >
-                          benjamin-correa-penaloza
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 p-6 bg-indigo-50 rounded-xl border border-indigo-100">
-                    <h4 className="font-semibold text-indigo-900 mb-2">
-                      ¿Necesitas automatizar procesos?
-                    </h4>
-                    <p className="text-indigo-700 text-sm mb-4">
-                      Agenda una consulta gratuita de 30 minutos para analizar
-                      tus procesos y definir una estrategia de automatización
-                      personalizada.
-                    </p>
-                    <Link
-                      to="/automatizaciones#diagnostico-gratuito"
-                      className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+        {/* Projects Section */}
+        <section
+          id="proyectos"
+          className="py-8 md:py-16 scroll-mt-[var(--nav-h,64px)]"
+        >
+          <ScrollAnimatedSection
+            className="max-w-7xl mx-auto px-4 md:px-6"
+            delay={600}
+          >
+            <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">
+              Proyectos
+            </h2>
+            <p className="mt-3 text-base sm:text-lg text-slate-700 max-w-3xl">
+              Soluciones tecnológicas que han transformado procesos
+              empresariales y mejorado la eficiencia operacional.
+            </p>
+            <div className="mt-6 md:mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              {projects.map((p) => (
+                <article
+                  key={p.id}
+                  className="group rounded-2xl border border-slate-200 p-4 md:p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition transform-gpu"
+                >
+                  <div className="relative h-40 sm:h-48 bg-slate-100 overflow-hidden rounded-xl mb-3 md:mb-4">
+                    <img
+                      src={p.images[0]}
+                      alt={p.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <a
+                      href={p.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute top-3 right-3 bg-white/90 hover:bg-white text-slate-700 p-1.5 md:p-2 rounded-lg transition-colors"
                     >
-                      Agendar Consulta
-                    </Link>
+                      <FaExternalLinkAlt size={14} className="md:w-4 md:h-4" />
+                    </a>
                   </div>
-                </div>
-
-                {/* Contact Form */}
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                    Envíame un Mensaje
+                  <h3 className="text-lg md:text-xl font-semibold text-slate-900">
+                    {p.title}
                   </h3>
-                  <ContactForm />
-                </div>
-              </div>
-            </ScrollAnimatedSection>
-          </section>
+                  <p className="mt-2 text-sm md:text-base text-slate-700">
+                    {p.description}
+                  </p>
+                  <div className="mt-3 md:mt-4 flex flex-wrap gap-1.5 md:gap-2">
+                    {p.technologies.map((s) => (
+                      <span
+                        key={s}
+                        className="text-xs text-slate-600 border border-slate-200 rounded-full px-2 md:px-2.5 py-0.5 md:py-1"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                  <a
+                    href={p.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 md:mt-4 inline-flex items-center text-sm md:text-base text-violet-600 font-medium hover:text-violet-700"
+                  >
+                    Ver proyecto →
+                  </a>
+                </article>
+              ))}
+            </div>
+          </ScrollAnimatedSection>
+        </section>
 
-          {/* Footer */}
-          <Footer />
-        </div>
-      )}
+        {/* Contact Section */}
+        <section
+          id="contacto"
+          className="py-8 md:py-16 scroll-mt-[var(--nav-h,64px)]"
+        >
+          <ScrollAnimatedSection
+            className="max-w-7xl mx-auto px-4 md:px-6"
+            delay={800}
+          >
+            <div className="text-center mb-8 md:mb-12">
+              <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">
+                ¿Necesitas automatizar procesos?
+              </h2>
+              <p className="mt-3 md:mt-4 text-base sm:text-lg text-slate-700 max-w-2xl mx-auto">
+                Completa el formulario y me pondré en contacto contigo para
+                evaluar tus necesidades y diseñar una solución personalizada.
+              </p>
+            </div>
+
+            <div className="max-w-2xl mx-auto">
+              <ContactForm />
+            </div>
+          </ScrollAnimatedSection>
+        </section>
+
+        {/* Footer */}
+        <Footer />
+      </div>
     </div>
   );
 };

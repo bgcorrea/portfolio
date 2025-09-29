@@ -1,0 +1,87 @@
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  1.591MB
+Step 1/13 : FROM node:20-alpine
+ ---> 6c47bbfd232e
+Step 2/13 : RUN npm install -g pnpm
+ ---> Using cache
+ ---> ac9cc054bbc0
+Step 3/13 : WORKDIR /app
+ ---> Using cache
+ ---> d75e7a4d0a8b
+Step 4/13 : COPY package.json pnpm-lock.yaml ./
+ ---> Using cache
+ ---> 21c7d9521139
+Step 5/13 : RUN pnpm install --frozen-lockfile
+ ---> Running in 11fc4f1cfb7e
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +1433
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 1433, reused 0, downloaded 0, added 0
+Progress: resolved 1433, reused 0, downloaded 54, added 0
+Progress: resolved 1433, reused 0, downloaded 170, added 84
+Progress: resolved 1433, reused 0, downloaded 293, added 290
+Progress: resolved 1433, reused 0, downloaded 385, added 384
+Progress: resolved 1433, reused 0, downloaded 507, added 505
+Progress: resolved 1433, reused 0, downloaded 660, added 657
+Progress: resolved 1433, reused 0, downloaded 837, added 826
+Progress: resolved 1433, reused 0, downloaded 1025, added 1021
+Progress: resolved 1433, reused 0, downloaded 1230, added 1227
+Progress: resolved 1433, reused 0, downloaded 1403, added 1402
+Progress: resolved 1433, reused 0, downloaded 1433, added 1432
+Progress: resolved 1433, reused 0, downloaded 1433, added 1433, done
+
+dependencies:
++ @calcom/embed-react 1.5.3
++ @testing-library/jest-dom 5.17.0
++ @testing-library/react 13.4.0
++ @testing-library/user-event 13.5.0
++ cookie-parser 1.4.7
++ cors 2.8.5
++ dompurify 3.2.7
++ dotenv 16.6.1
++ express 5.1.0
++ express-rate-limit 8.1.0
++ framer-motion 12.23.22
++ google-auth-library 10.3.0
++ googleapis 150.0.1
++ i18next 25.5.2
++ isomorphic-dompurify 2.28.0
++ marked 16.3.0
++ node-fetch 3.3.2
++ pdfjs-dist 3.11.174
++ react 18.3.1
++ react-dom 18.3.1
++ react-helmet-async 2.0.5
++ react-i18next 15.7.3
++ react-icons 5.5.0
++ react-pdf 7.7.3
++ react-router-dom 6.30.1
++ react-scripts 5.0.1
++ resend 6.1.0
++ web-vitals 2.1.4
+
+devDependencies:
++ autoprefixer 10.4.21
++ nodemon 3.1.10
++ postcss 8.5.6
++ tailwindcss 3.4.17
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: canvas, core-js, core-js-pure.                      │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Done in 16.1s using pnpm v10.17.1
+ ---> Removed intermediate container 11fc4f1cfb7e
+ ---> 5152dcdf60fd
+Step 6/13 : COPY src ./src
+ ---> 0878409ca0a8
+Step 7/13 : COPY public ./public
+COPY failed: file not found in build context or excluded by .dockerignore: stat public: file does not exist

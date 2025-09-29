@@ -1,0 +1,23 @@
+FROM node:20-alpine
+
+# Instalar pnpm globalmente
+RUN npm install -g pnpm
+
+# Crear directorio de trabajo
+WORKDIR /app
+
+# Copiar archivos de dependencias primero
+COPY package.json pnpm-lock.yaml ./
+
+# Instalar dependencias
+RUN pnpm install --frozen-lockfile
+
+# Copiar código fuente (excluyendo node_modules por .dockerignore)
+COPY . .
+
+# Exponer puerto
+EXPOSE 3000
+
+# Comando de inicio
+CMD ["pnpm", "run", "start"]
+

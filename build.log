@@ -1,0 +1,81 @@
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon   1.59MB
+Step 1/9 : FROM node:20-alpine
+ ---> 6c47bbfd232e
+Step 2/9 : RUN npm install -g pnpm
+ ---> Using cache
+ ---> 753457f01172
+Step 3/9 : WORKDIR /app
+ ---> Using cache
+ ---> cbe9f2071b21
+Step 4/9 : COPY package.json pnpm-lock.yaml ./
+ ---> Using cache
+ ---> b51fa9132fec
+Step 5/9 : RUN pnpm install --frozen-lockfile
+ ---> Running in 8f5df108715d
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +1433
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 1433, reused 0, downloaded 0, added 0
+Progress: resolved 1433, reused 0, downloaded 19, added 0
+Progress: resolved 1433, reused 0, downloaded 104, added 12
+Progress: resolved 1433, reused 0, downloaded 221, added 220
+Progress: resolved 1433, reused 0, downloaded 330, added 329
+Progress: resolved 1433, reused 0, downloaded 431, added 431
+Progress: resolved 1433, reused 0, downloaded 599, added 598
+Progress: resolved 1433, reused 0, downloaded 765, added 762
+Progress: resolved 1433, reused 0, downloaded 944, added 942
+Progress: resolved 1433, reused 0, downloaded 1115, added 1113
+Progress: resolved 1433, reused 0, downloaded 1276, added 1272
+Progress: resolved 1433, reused 0, downloaded 1431, added 1429
+Progress: resolved 1433, reused 0, downloaded 1433, added 1433, done
+
+dependencies:
++ @calcom/embed-react 1.5.3
++ @testing-library/jest-dom 5.17.0
++ @testing-library/react 13.4.0
++ @testing-library/user-event 13.5.0
++ cookie-parser 1.4.7
++ cors 2.8.5
++ dompurify 3.2.7
++ dotenv 16.6.1
++ express 5.1.0
++ express-rate-limit 8.1.0
++ framer-motion 12.23.22
++ google-auth-library 10.3.0
++ googleapis 150.0.1
++ i18next 25.5.2
++ isomorphic-dompurify 2.28.0
++ marked 16.3.0
++ node-fetch 3.3.2
++ pdfjs-dist 3.11.174
++ react 18.3.1
++ react-dom 18.3.1
++ react-helmet-async 2.0.5
++ react-i18next 15.7.3
++ react-icons 5.5.0
++ react-pdf 7.7.3
++ react-router-dom 6.30.1
++ react-scripts 5.0.1
++ resend 6.1.0
++ web-vitals 2.1.4
+
+devDependencies:
++ autoprefixer 10.4.21
++ nodemon 3.1.10
++ postcss 8.5.6
++ tailwindcss 3.4.17
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: canvas, core-js, core-js-pure.                      │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Done in 16.3s using pnpm v10.17.1

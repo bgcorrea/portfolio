@@ -41,56 +41,50 @@
       ]
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/sitemap.xml",
-      "dest": "/sitemap.xml",
-      "headers": {
-        "Content-Type": "application/xml"
-      }
+      "source": "/sitemap.xml",
+      "destination": "/sitemap.xml"
     },
     {
-      "src": "/robots.txt",
-      "dest": "/robots.txt",
-      "headers": {
-        "Content-Type": "text/plain"
-      }
+      "source": "/robots.txt",
+      "destination": "/robots.txt"
     },
     {
-      "src": "/CV.pdf",
-      "dest": "/CV.pdf"
+      "source": "/CV.pdf",
+      "destination": "/CV.pdf"
     },
     {
-      "src": "/lead-magnet/(.*)",
-      "dest": "/lead-magnet/$1"
+      "source": "/lead-magnet/(.*)",
+      "destination": "/lead-magnet/$1"
     },
     {
-      "src": "/img/(.*)",
-      "dest": "/img/$1"
+      "source": "/img/(.*)",
+      "destination": "/img/$1"
     },
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
+      "source": "/static/(.*)",
+      "destination": "/static/$1"
     },
     {
-      "src": "/favicon.ico",
-      "dest": "/favicon.ico"
+      "source": "/favicon.ico",
+      "destination": "/favicon.ico"
     },
     {
-      "src": "/manifest.json",
-      "dest": "/manifest.json"
+      "source": "/manifest.json",
+      "destination": "/manifest.json"
     },
     {
-      "src": "/logo192.png",
-      "dest": "/logo192.png"
+      "source": "/logo192.png",
+      "destination": "/logo192.png"
     },
     {
-      "src": "/logo512.png",
-      "dest": "/logo512.png"
+      "source": "/logo512.png",
+      "destination": "/logo512.png"
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

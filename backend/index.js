@@ -184,7 +184,7 @@ app.post("/api/lead-magnet", async (req, res) => {
     const { name, email, website } = req.body || {}; // website = honeypot
     const page = "/automatizaciones";
     const downloadUrl =
-      "https://benjamincorrea.com/lead-magnet/checklist-5-procesos.pdf";
+      "https://benjamincorrea.com/lead-magnet/guia-automatizacion-benjamin-correa.pdf";
 
     // anti-spam (honeypot)
     if (website) return res.status(200).json({ ok: true }); // bot atrapado

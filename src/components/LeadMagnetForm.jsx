@@ -51,8 +51,7 @@ export default function LeadMagnetForm() {
           ¡Listo! Revisa tu correo 📩
         </h3>
         <p style={{ color: "#374151" }}>
-          Te envié el checklist a <b>{email}</b>. También puedes descargarlo
-          aquí:
+          Te envié la guía a <b>{email}</b>. También puedes descargarla aquí:
         </p>
         {downloadUrl && (
           <a
@@ -70,7 +69,7 @@ export default function LeadMagnetForm() {
               borderRadius: 10,
             }}
           >
-            Descargar checklist (PDF)
+            Descargar guía (PDF)
           </a>
         )}
         <div style={{ height: 12 }} />

@@ -68,17 +68,17 @@ function escapeHtml(s = "") {
 export function renderClientLeadMagnet({ name, downloadUrl }) {
   const body = `
     ${header(
-      "¡Tu checklist está listo!",
+      "¡Tu guía está lista!",
       "Guía práctica: 5 procesos que todo negocio digital debería automatizar"
     )}
     <tr><td style="padding:20px 32px;font-family:Arial,Helvetica,sans-serif;color:#111827;">
       <p style="margin:0 0 14px 0;color:#6B7280;font-size:14px;">Hola ${escapeHtml(
         name || ""
-      )}, gracias por descargar mi checklist.</p>
+      )}, gracias por descargar mi guía de automatización.</p>
 
       <a href="${downloadUrl}" target="_blank"
          style="display:inline-block;background:#7B7AE6;color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 18px;border-radius:12px;">
-        Descargar checklist (PDF)
+        Descargar guía (PDF)
       </a>
 
       <div style="height:16px;"></div>
@@ -124,7 +124,7 @@ export function renderInternalLeadMagnet({ name, email, page }) {
 export async function sendLeadMagnetClient({ name, email, downloadUrl }) {
   const html = renderClientLeadMagnet({ name, downloadUrl });
   const text = [
-    `Hola ${name || ""}, gracias por descargar el checklist.`,
+    `Hola ${name || ""}, gracias por descargar la guía de automatización.`,
     `Descarga: ${downloadUrl}`,
     "",
     "Si quieres apoyo para implementarlo, agenda acá (30 min):",
@@ -134,7 +134,7 @@ export async function sendLeadMagnetClient({ name, email, downloadUrl }) {
   const { error } = await resend.emails.send({
     from: `Benjamín Correa <${CONTACT_FROM}>`,
     to: [email],
-    subject: "Tu checklist de automatizaciones (PDF)",
+    subject: "Tu guía de automatizaciones (PDF)",
     html,
     text,
     reply_to: CONTACT_FROM,

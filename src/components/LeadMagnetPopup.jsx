@@ -109,9 +109,7 @@ const LeadMagnetPopup = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">¡Regalo exclusivo!</h2>
-                <p className="text-violet-100 text-xs">
-                  Checklist premium gratuito
-                </p>
+                <p className="text-violet-100 text-xs">Guía premium gratuita</p>
               </div>
             </div>
 
@@ -152,7 +150,7 @@ const LeadMagnetPopup = () => {
           <div className="p-4">
             <div className="text-center mb-3">
               <h3 className="text-lg font-bold text-slate-900 mb-1">
-                Checklist: 5 Procesos para Automatizar Primero
+                Guía: 5 Procesos para Automatizar Primero
               </h3>
               <p className="text-slate-600 text-xs">
                 Identifica en <strong>5 minutos</strong> dónde estás perdiendo

@@ -1,11 +1,12 @@
 {
   "version": 2,
+  "framework": "create-react-app",
   "buildCommand": "npm run build",
   "outputDirectory": "build",
-  "framework": "create-react-app",
+
   "headers": [
     {
-      "source": "/static/(.*)",
+      "source": "/static/:path*",
       "headers": [
         {
           "key": "Cache-Control",
@@ -14,7 +15,7 @@
       ]
     },
     {
-      "source": "/img/(.*)",
+      "source": "/img/:path*",
       "headers": [
         {
           "key": "Cache-Control",
@@ -23,7 +24,7 @@
       ]
     },
     {
-      "source": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|webp|avif|ico|woff|woff2|ttf|eot))",
+      "source": "/:all*.(css|js|png|jpg|jpeg|gif|svg|webp|avif|ico|woff|woff2|ttf|eot)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -32,59 +33,23 @@
       ]
     },
     {
-      "source": "/(.*\\.(html|xml|txt))",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600"
-        }
-      ]
+      "source": "/:all*.(html|xml|txt)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
     }
   ],
+
   "rewrites": [
-    {
-      "source": "/sitemap.xml",
-      "destination": "/sitemap.xml"
-    },
-    {
-      "source": "/robots.txt",
-      "destination": "/robots.txt"
-    },
-    {
-      "source": "/CV.pdf",
-      "destination": "/CV.pdf"
-    },
-    {
-      "source": "/lead-magnet/(.*)",
-      "destination": "/lead-magnet/$1"
-    },
-    {
-      "source": "/img/(.*)",
-      "destination": "/img/$1"
-    },
-    {
-      "source": "/static/(.*)",
-      "destination": "/static/$1"
-    },
-    {
-      "source": "/favicon.ico",
-      "destination": "/favicon.ico"
-    },
-    {
-      "source": "/manifest.json",
-      "destination": "/manifest.json"
-    },
-    {
-      "source": "/logo192.png",
-      "destination": "/logo192.png"
-    },
-    {
-      "source": "/logo512.png",
-      "destination": "/logo512.png"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/CV.pdf", "destination": "/CV.pdf" },
+    { "source": "/lead-magnet/:path*", "destination": "/lead-magnet/:path*" },
+    { "source": "/img/:path*", "destination": "/img/:path*" },
+    { "source": "/static/:path*", "destination": "/static/:path*" },
+    { "source": "/favicon.ico", "destination": "/favicon.ico" },
+    { "source": "/manifest.json", "destination": "/manifest.json" },
+    { "source": "/logo192.png", "destination": "/logo192.png" },
+    { "source": "/logo512.png", "destination": "/logo512.png" },
+
+    { "source": "/:path*", "destination": "/index.html" }
   ]
 }
